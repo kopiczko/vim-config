@@ -14,6 +14,8 @@ set modeline
 
 set clipboard=unnamedplus
 
+set wildignore+=*/log/*,*/target/*,*.class     " MacOSX/Linux
+
 execute pathogen#infect()
 
 " CtrlP {{{
