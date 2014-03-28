@@ -5,10 +5,16 @@ set encoding=utf-8
 set fileencoding=utf-8
 
 " search
+set ignorecase
 set smartcase
 set hlsearch
 set incsearch 
 nnoremap <silent> <CR> :nohlsearch<CR>  
+
+" tabs
+set tabstop=2
+set shiftwidth=2
+set expandtab
 
 set modeline
 
