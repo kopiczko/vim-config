@@ -1,3 +1,6 @@
+set nocompatible   " disable vi-compatibility
+set t_Co=256       " explicitly tell Vim that the terminal supports 256 colors
+
 syntax on
 filetype plugin indent on
 
