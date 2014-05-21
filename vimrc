@@ -19,6 +19,12 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
+" handle long lines
+set wrap
+set textwidth=79
+set formatoptions=qrn1
+set colorcolumn=80
+
 set modeline
 
 set clipboard=unnamedplus
