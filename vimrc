@@ -37,6 +37,11 @@ execute pathogen#infect()
 let g:ctrlp_working_path_mode = 'ra'
 " }}}
 
+" airline {{{
+let g:airline_powerline_fonts = 1
+let g:airline_theme='solarized'
+"
+
 augroup markdown
   autocmd!
   autocmd BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
