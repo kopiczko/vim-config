@@ -7,6 +7,9 @@ filetype plugin indent on
 set encoding=utf-8
 set fileencoding=utf-8
 
+" statusline always visible
+set laststatus=2
+
 " search
 set ignorecase
 set smartcase
