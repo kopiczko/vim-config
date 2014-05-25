@@ -36,6 +36,8 @@ set wildignore+=*/log/*,*/target/*,*.class     " MacOSX/Linux
 
 execute pathogen#infect()
 
+colorscheme jellybeans
+
 " CtrlP {{{
 let g:ctrlp_working_path_mode = 'ra'
 " }}}
