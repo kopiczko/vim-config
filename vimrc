@@ -40,6 +40,12 @@ execute pathogen#infect()
 let g:ctrlp_working_path_mode = 'ra'
 " }}}
 
+" Powerline {{{
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
+" }}}
+
 augroup markdown
   autocmd!
   autocmd BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
