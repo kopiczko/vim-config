@@ -14,8 +14,8 @@ set laststatus=2
 set ignorecase
 set smartcase
 set hlsearch
-set incsearch 
-nnoremap <silent> <CR> :nohlsearch<CR>  
+set incsearch
+nnoremap <silent> <CR> :nohlsearch<CR>
 
 " tabs
 set tabstop=2
