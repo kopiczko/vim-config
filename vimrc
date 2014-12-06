@@ -30,7 +30,15 @@ set colorcolumn=80
 
 set modeline
 
-set clipboard=unnamedplus
+if has("unix")
+  let s:uname = system("uname")
+  if s:uname == "Darwin\n"
+    set clipboard=unnamed
+  else
+    set clipboard=unnamedplus
+  endif
+endif
+
 
 set wildignore+=*/log/*,*/target/*,*.class     " MacOSX/Linux
 
