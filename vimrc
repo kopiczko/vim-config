@@ -65,3 +65,4 @@ augroup markdown
   autocmd BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
 
+noremap <F2> :NERDTreeToggle<CR>
