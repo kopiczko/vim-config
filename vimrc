@@ -21,12 +21,15 @@ nnoremap <silent> <CR> :nohlsearch<CR>
 set tabstop=2
 set shiftwidth=2
 set expandtab
+set shiftround
 
 " handle long lines
 set wrap
 set textwidth=79
 set formatoptions=qrn1
 set colorcolumn=80
+
+set matchtime=0
 
 set modeline
 
@@ -39,8 +42,29 @@ if has("unix")
   endif
 endif
 
-
 set wildignore+=*/log/*,*/target/*,*.class     " MacOSX/Linux
+
+let mapleader = ","
+let maplocalleader = ","
+
+inoremap jk <esc>
+
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+nnoremap <C-a> ^
+nnoremap <C-e> ^
+nnoremap <S-h> :bp<CR>
+nnoremap <S-l> :bn<CR>
+
+vnoremap " <esc><esc>`<i"<esc>`>la"<esc>
+
+"onoremap in( :<c-u>normal! f(vi(<cr>
+"onoremap il( :<c-u>normal! F)vi(<cr>
+
+iabbrev @@ kopiczko@gmail.com
+iabbrev retunr return
+iabbrev reutnr return
 
 execute pathogen#infect()
 
