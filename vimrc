@@ -67,11 +67,15 @@ iabbrev retunr return
 iabbrev reutnr return
 
 execute pathogen#infect()
-
 if has('mac')       " mac settigns
 elseif has('unix')  " linux settings
   let g:netrw_browsex_viewer = 'xdg-open'
 endif
+
+" Solarized theme {{{
+set background=dark
+colorscheme solarized
+" }}}
 
 " CtrlP {{{
 let g:ctrlp_working_path_mode = 'ra'
