@@ -28,6 +28,7 @@ set wrap
 set textwidth=79
 set formatoptions=qrn1
 set colorcolumn=80
+hi ColorColumn ctermbg=lightgrey
 
 set matchtime=0
 
@@ -73,8 +74,8 @@ elseif has('unix')  " linux settings
 endif
 
 " Solarized theme {{{
-set background=dark
-colorscheme solarized
+"set background=dark
+colorscheme desert
 " }}}
 
 " CtrlP {{{
