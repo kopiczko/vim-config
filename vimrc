@@ -81,7 +81,10 @@ colorscheme solarized
 let g:ctrlp_working_path_mode = 'ra'
 " }}}
 
-" airline {{{
+" lightline {{{
+let g:lightline = {
+  \ 'colorscheme': 'solarized',
+  \ }
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 " }}}
