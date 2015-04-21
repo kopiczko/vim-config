@@ -78,7 +78,7 @@ endif
 
 " Solarized theme {{{
 "set background=dark
-colorscheme desert
+colorscheme darcula
 " }}}
 
 " CtrlP {{{
