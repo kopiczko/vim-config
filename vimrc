@@ -54,7 +54,10 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>sv :source $MYVIMRC<cr>
 
 nnoremap <C-a> ^
-nnoremap <C-e> ^
+nnoremap <C-e> $
+nnoremap - <C-x>
+nnoremap = <C-a>
+nnoremap <C-e> $
 nnoremap <S-h> :bp<CR>
 nnoremap <S-l> :bn<CR>
 
