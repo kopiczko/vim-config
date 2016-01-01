@@ -71,9 +71,10 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 
 nnoremap <C-a> ^
 nnoremap <C-e> $
-nnoremap - <C-x>
-nnoremap = <C-a>
-nnoremap <C-e> $
+inoremap <C-a> <Esc>I
+inoremap <C-e> <Esc>A
+nnoremap <S-a> <C-a>
+nnoremap <S-x> <C-x>
 nnoremap <S-h> :bp<CR>
 nnoremap <S-l> :bn<CR>
 
