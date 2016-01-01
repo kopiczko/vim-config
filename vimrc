@@ -73,8 +73,8 @@ nnoremap <C-a> ^
 nnoremap <C-e> $
 inoremap <C-a> <Esc>I
 inoremap <C-e> <Esc>A
-nnoremap <S-a> <C-a>
-nnoremap <S-x> <C-x>
+nnoremap <M-a> <C-a>
+nnoremap <M-x> <C-x>
 nnoremap <S-h> :bp<CR>
 nnoremap <S-l> :bn<CR>
 
@@ -145,11 +145,10 @@ augroup END
 noremap <F2> :NERDTreeToggle<CR>
 
 let g:tmux_navigator_no_mappings = 1
-
-nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <Esc>\ :TmuxNavigatePrevious<cr>
 
 function! GoFoldExpr(lnum) "{{{
