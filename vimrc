@@ -117,6 +117,19 @@ let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 " }}}
 
+" vim-go {{{
+
+let g:go_fmt_command = "goimports"
+
+augroup vimgo
+  autocmd!
+  autocmd FileType go nmap <leader>r <Plug>(go-run)
+  autocmd FileType go nmap <leader>d <Plug>(go-doc)
+  autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
+augroup END
+
+" }}}
+
 augroup markdown
   autocmd!
   autocmd BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
