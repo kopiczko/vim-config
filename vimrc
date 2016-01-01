@@ -45,6 +45,8 @@ if has("unix")
   endif
 endif
 
+autocmd FileType help wincmd H " open help vertically
+
 set wildignore+=*/log/*,*/target/*,*.class     " MacOSX/Linux
 
 let mapleader = ","
