@@ -97,6 +97,11 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 " }}}
 
+" syntastic {{{
+let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
+let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+" }}}
+
 augroup markdown
   autocmd!
   autocmd BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
