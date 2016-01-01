@@ -123,9 +123,16 @@ let g:go_fmt_command = "goimports"
 
 augroup vimgo
   autocmd!
+
   autocmd FileType go nmap <leader>r <Plug>(go-run)
   autocmd FileType go nmap <leader>d <Plug>(go-doc)
+
   autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
+
+  " Folding
+  autocmd FileType go setlocal foldmethod=expr foldexpr=GoFoldExpr(v:lnum)
+  autocmd BufLeave,BufWritePre *.go mkview
+  autocmd BufEnter,BufWritePost *.go silent loadview
 augroup END
 
 " }}}
@@ -136,3 +143,32 @@ augroup markdown
 augroup END
 
 noremap <F2> :NERDTreeToggle<CR>
+
+function! GoFoldExpr(lnum) "{{{
+  let line = getline(a:lnum)
+
+  " Fold comment blocks startring with //
+  if line[0:1] == '//'
+    let nextl = getline(a:lnum+1)
+    if nextl[0:1] == '//'
+      return 1
+    else
+      return '<1'
+    endif
+  endif
+
+  " Fold {} blocks starting with the beggining of the line
+  let prevl = getline(a:lnum-1)
+  if line[0] == "\t" || line == ''
+    if prevl[0] != "\t" && prevl[-1:-1] == '{'
+      return 1
+    else
+      return '='
+    endif
+  endif
+  if line[0] == '}' && prevl[0] == "\t"
+    return '<1'
+  endif
+
+  return 0
+endfunction "}}}
