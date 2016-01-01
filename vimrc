@@ -73,8 +73,8 @@ nnoremap <C-a> ^
 nnoremap <C-e> $
 inoremap <C-a> <Esc>I
 inoremap <C-e> <Esc>A
-nnoremap <M-a> <C-a>
-nnoremap <M-x> <C-x>
+nnoremap <M-0> <C-a>
+nnoremap <M--> <C-x>
 nnoremap <S-h> :bp<CR>
 nnoremap <S-l> :bn<CR>
 
