@@ -1,13 +1,25 @@
 " vim: fdm=marker
 
-set nocompatible   " disable vi-compatibility
-set t_Co=256       " explicitly tell Vim that the terminal supports 256 colors
+" Vim Settings {{{
+
+if !has('nvim')
+
+  set nocompatible   " disable vi-compatibility
+  set t_Co=256       " explicitly tell Vim that the terminal supports 256 colors
+
+  set encoding=utf-8
+  set fileencoding=utf-8
+endif
 
 syntax on
 filetype plugin indent on
 
-set encoding=utf-8
-set fileencoding=utf-8
+set noerrorbells             " No beeps
+set noswapfile               " Don't use swapfile
+set nobackup                 " Don't create annoying backup files
+set nosplitright             " Split vertical windows left bo the current windows
+set splitbelow               " Split horizontal windows below to the current windows
+set hidden
 
 " statusline always visible
 set laststatus=2
@@ -79,6 +91,8 @@ if has('mac')       " mac settigns
 elseif has('unix')  " linux settings
   let g:netrw_browsex_viewer = 'xdg-open'
 endif
+
+" }}}
 
 " Solarized theme {{{
 "set background=dark
