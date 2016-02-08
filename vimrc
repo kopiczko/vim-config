@@ -38,10 +38,15 @@ set expandtab
 set shiftround
 
 " handle long lines
+set number
 set wrap
+set linebreak
+set breakindent
+let &showbreak = '↳ '
+"let &showbreak = '↪ '
 set textwidth=79
 set formatoptions=qrn1
-set colorcolumn=80
+set colorcolumn=100
 hi ColorColumn ctermbg=lightgrey
 
 set matchtime=0
@@ -77,6 +82,8 @@ nnoremap <M-0> <C-a>
 nnoremap <M--> <C-x>
 nnoremap <S-h> :bp<CR>
 nnoremap <S-l> :bn<CR>
+nnoremap j gj
+nnoremap k gk
 
 vnoremap " <esc><esc>`<i"<esc>`>la"<esc>
 
