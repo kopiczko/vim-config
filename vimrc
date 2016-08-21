@@ -150,7 +150,7 @@ augroup markdown
   autocmd BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
 
-noremap <F2> :NERDTreeToggle<CR>
+noremap <F2> :NERDTreeFind<CR>
 
 let g:tmux_navigator_no_mappings = 1
 nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
