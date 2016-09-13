@@ -149,6 +149,16 @@ augroup END
 
 " }}}
 
+" rust {{{
+
+augroup rust
+  autocmd!
+
+  autocmd FileType rust nmap  <C-]> :YcmComplete GoTo<CR>
+augroup END
+
+" }}}
+
 augroup markdown
   autocmd!
   autocmd BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
