@@ -141,10 +141,6 @@ augroup vimgo
 
   autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 
-  " Folding
-  autocmd FileType go setlocal foldmethod=expr foldexpr=GoFoldExpr(v:lnum)
-  autocmd BufLeave,BufWritePre *.go mkview
-  autocmd BufEnter,BufWritePost *.go silent loadview
 augroup END
 
 " }}}
@@ -172,32 +168,3 @@ nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <Esc>\ :TmuxNavigatePrevious<cr>
-
-function! GoFoldExpr(lnum) "{{{
-  let line = getline(a:lnum)
-
-  " Fold comment blocks startring with //
-  if line[0:1] == '//'
-    let nextl = getline(a:lnum+1)
-    if nextl[0:1] == '//'
-      return 1
-    else
-      return '<1'
-    endif
-  endif
-
-  " Fold {} blocks starting with the beggining of the line
-  let prevl = getline(a:lnum-1)
-  if line[0] == "\t" || line == ''
-    if prevl[0] != "\t" && prevl[-1:-1] == '{'
-      return 1
-    else
-      return '='
-    endif
-  endif
-  if line[0] == '}' && prevl[0] == "\t"
-    return '<1'
-  endif
-
-  return 0
-endfunction "}}}
