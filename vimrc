@@ -102,6 +102,15 @@ endif
 
 " }}}
 
+" python {{{
+"
+" https://github.com/zchee/deoplete-jedi/wiki/Setting-up-Python-for-Neovim
+if has('nvim')
+  let g:python_host_prog = $HOME.'/.pyenv/versions/neovim2/bin/python'
+  let g:python3_host_prog = $HOME.'/.pyenv/versions/neovim3/bin/python'
+endif
+" }}}
+
 " Solarized theme {{{
 "set background=dark
 colorscheme darcula
