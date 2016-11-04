@@ -49,3 +49,6 @@
 [submodule "bundle/deoplete-go"]
 	path = bundle/deoplete-go
 	url = git@github.com:zchee/deoplete-go.git
+[submodule "bundle/vim-racer"]
+	path = bundle/vim-racer
+	url = git@github.com:racer-rust/vim-racer.git
