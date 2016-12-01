@@ -161,9 +161,9 @@ let g:go_fmt_command = "goimports"
 augroup vimgo
   autocmd!
 
-  autocmd FileType go nmap <leader>r <Plug>(go-run)
-  autocmd FileType go nmap <leader>d <Plug>(go-doc)
-  autocmd FileType go nmap <C-]> <Plug>(go-def)
+  autocmd FileType go nmap <buffer> <leader>r <Plug>(go-run)
+  autocmd FileType go nmap <buffer> <leader>d <Plug>(go-doc)
+  autocmd FileType go nmap <buffer> <C-]> <Plug>(go-def)
 
   autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 
