@@ -111,9 +111,10 @@ if has('nvim')
 endif
 " }}}
 
-" Solarized theme {{{
-"set background=dark
-colorscheme darcula
+" color theme {{{
+" use colorschme from terminal
+set background=light
+highlight Visual ctermbg=Grey
 " }}}
 
 " CtrlP {{{
