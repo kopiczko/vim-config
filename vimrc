@@ -119,6 +119,12 @@ highlight Visual ctermbg=Grey
 
 " CtrlP {{{
 let g:ctrlp_working_path_mode = 'ra'
+
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0 " ag is fast enough
+endif
 " }}}
 
 " deoplete {{{
