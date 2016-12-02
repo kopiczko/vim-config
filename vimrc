@@ -117,7 +117,13 @@ set background=light
 highlight Visual ctermbg=Grey
 " }}}
 
+" denite {{{
+call denite#custom#alias('source', 'file_rec/git', 'file_rec')
+call denite#custom#var('file_rec/git', 'command',
+      \ ['git', 'ls-files', '-co', '-x', 'vendor'])
 
+nnoremap <c-p> :Denite file_rec/git<CR>
+" }}}
 
 " deoplete {{{
 let g:deoplete#enable_at_startup = 1
