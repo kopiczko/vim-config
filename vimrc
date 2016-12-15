@@ -2,8 +2,11 @@
 
 " Vim Settings {{{
 
-if !has('nvim')
+if has('nvim')
+  set inccommand=nosplit " live substitution
+endif
 
+if !has('nvim')
   set nocompatible   " disable vi-compatibility
   set t_Co=256       " explicitly tell Vim that the terminal supports 256 colors
 
