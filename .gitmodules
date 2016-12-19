@@ -49,3 +49,6 @@
 [submodule "bundle/denite.vim"]
 	path = bundle/denite.vim
 	url = git@github.com:Shougo/denite.nvim.git
+[submodule "bundle/AnsiEsc.vim"]
+	path = bundle/AnsiEsc.vim
+	url = git@github.com:vim-scripts/AnsiEsc.vim.git
