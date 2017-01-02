@@ -38,8 +38,8 @@ set incsearch
 nnoremap <silent> <CR> :nohlsearch<CR>
 
 " tabs
-set tabstop=2
-set shiftwidth=2
+set tabstop=8
+set shiftwidth=4
 set expandtab
 set shiftround
 
@@ -52,6 +52,7 @@ let &showbreak = '↳ '
 "let &showbreak = '↪ '
 set textwidth=79
 set formatoptions=qrn1
+set cursorline
 set colorcolumn=100
 hi ColorColumn ctermbg=lightgrey
 
@@ -84,7 +85,7 @@ nnoremap <C-a> ^
 nnoremap <C-e> $
 inoremap <C-a> <Esc>I
 inoremap <C-e> <Esc>A
-nnoremap <M-0> <C-a>
+nnoremap <M-=> <C-a>
 nnoremap <M--> <C-x>
 nnoremap <S-h> :bp<CR>
 nnoremap <S-l> :bn<CR>
