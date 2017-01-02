@@ -123,6 +123,22 @@ set background=light
 highlight Visual ctermbg=Grey
 " }}}
 
+" window navigation {{{
+let g:tmux_navigator_no_mappings = 1
+if !empty($TMUX)
+  nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+  nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+  nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+  nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+  nnoremap <silent> <Esc>\ :TmuxNavigatePrevious<cr>
+else
+  nnoremap <silent> <M-h> <C-w>h
+  nnoremap <silent> <M-j> <C-w>j
+  nnoremap <silent> <M-k> <C-w>k
+  nnoremap <silent> <M-l> <C-w>l
+endif
+" }}}
+
 " denite {{{
 call denite#custom#alias('source', 'file_rec/git', 'file_rec')
 call denite#custom#var('file_rec/git', 'command',
@@ -192,10 +208,3 @@ augroup markdown
 augroup END
 
 noremap <F2> :NERDTreeFind<CR>
-
-let g:tmux_navigator_no_mappings = 1
-nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <Esc>\ :TmuxNavigatePrevious<cr>
