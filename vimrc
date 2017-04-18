@@ -119,7 +119,8 @@ endif
 " }}}
 
 " color theme {{{
-" use colorschme from terminal
+colorscheme PaperColor
+
 set background=light
 highlight Visual ctermbg=Grey
 " }}}
@@ -150,7 +151,7 @@ nnoremap <c-p> :Denite file_rec/git<CR>
 
 " lightline {{{
 let g:lightline = {
-  \ 'colorscheme': 'solarized',
+  \ 'colorscheme': 'PaperColor',
   \ }
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1

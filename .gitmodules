@@ -43,6 +43,9 @@
 [submodule "bundle/denite.vim"]
 	path = bundle/denite.vim
 	url = git@github.com:Shougo/denite.nvim.git
+[submodule "bundle/papercolor-theme"]
+	path = bundle/papercolor-theme
+	url = git://github.com/NLKNguyen/papercolor-theme
 [submodule "bundle/tern_for_vim"]
 	path = bundle/tern_for_vim
 	url = git@github.com:ternjs/tern_for_vim.git
