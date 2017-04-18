@@ -37,12 +37,6 @@
 [submodule "bundle/tagbar"]
 	path = bundle/tagbar
 	url = git@github.com:majutsushi/tagbar.git
-[submodule "bundle/deoplete.nvim"]
-	path = bundle/deoplete.nvim
-	url = git@github.com:Shougo/deoplete.nvim.git
-[submodule "bundle/deoplete-go"]
-	path = bundle/deoplete-go
-	url = git@github.com:zchee/deoplete-go.git
 [submodule "bundle/vim-racer"]
 	path = bundle/vim-racer
 	url = git@github.com:racer-rust/vim-racer.git
