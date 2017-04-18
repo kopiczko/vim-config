@@ -183,6 +183,18 @@ augroup END
 
 " }}}
 
+" tern_for_vim {{{
+
+augroup ternforvim
+  autocmd!
+
+  autocmd FileType javascript nmap <buffer> <C-]> :TernDef<CR>
+
+  autocmd FileType javascript setlocal tabstop=4 shiftwidth=4 softtabstop=4
+augroup END
+
+" }}}
+
 " rust {{{
 
 augroup rust
