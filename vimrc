@@ -206,9 +206,11 @@ augroup END
 
 " }}}
 
+" markdown {{{
 augroup markdown
   autocmd!
   autocmd BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
+" }}}
 
 noremap <F2> :NERDTreeFind<CR>
