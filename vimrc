@@ -160,6 +160,11 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 " }}}
 
+" fzf {
+" git ls-files -co -x vendor
+nnoremap <c-p> :FZF!<CR>
+" }
+
 " tagbar {{{
 nmap <F3> :TagbarToggle<CR>
 let g:tagbar_sort = 0

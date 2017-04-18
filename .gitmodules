@@ -52,3 +52,6 @@
 [submodule "bundle/vim-flavored-markdown"]
 	path = bundle/vim-flavored-markdown
 	url = git@github.com:jtratner/vim-flavored-markdown.git
+[submodule "bundle/fzf"]
+	path = bundle/fzf
+	url = git@github.com:junegunn/fzf.git
