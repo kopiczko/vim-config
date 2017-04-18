@@ -40,9 +40,6 @@
 [submodule "bundle/vim-racer"]
 	path = bundle/vim-racer
 	url = git@github.com:racer-rust/vim-racer.git
-[submodule "bundle/denite.vim"]
-	path = bundle/denite.vim
-	url = git@github.com:Shougo/denite.nvim.git
 [submodule "bundle/papercolor-theme"]
 	path = bundle/papercolor-theme
 	url = git://github.com/NLKNguyen/papercolor-theme
