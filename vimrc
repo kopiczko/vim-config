@@ -197,11 +197,32 @@ augroup END
 " }}}
 
 " rust {{{
+let g:ftplugin_rust_source_path = $HOME.'/code/rust-lang/rust/src'
+let g:rustfmt_autosave = 1
+
+" vim-racer
+let g:racer_cmd=$HOME.'/.cargo/bin/racer'
+let g:racer_no_default_keymappings = 1
+
+" tagbar settings for rust
+let g:tagbar_type_rust = {
+   \ 'ctagstype' : 'rust',
+   \ 'kinds' : [
+       \'T:types,type definitions',
+       \'f:functions,function definitions',
+       \'g:enum,enumeration names',
+       \'s:structure names',
+       \'m:modules,module names',
+       \'c:consts,static constants',
+       \'t:traits,traits',
+       \'i:impls,trait implementations',
+   \]
+   \}
 
 augroup rust
   autocmd!
 
-  autocmd FileType rust nmap  <C-]> :YcmComplete GoTo<CR>
+  autocmd filetype rust nmap <buffer> <c-]> <Plug>RacerGoToDefinitionDrect
 augroup END
 
 " }}}
