@@ -1,21 +1,28 @@
-# Install
+## Install
 
-## Install [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+Clone the repository and update submodules.
 
-See [installation instructions](https://github.com/Valloric/YouCompleteMe#installation)
-for your OS.
-
-On my mac I do it like this (if you want to use `--gocod-completer` flag you
-have to have [go](http://golang.org/doc/install) installed):
-
-```
-brew install clang # use your OS package manager
-cd ~/.vim/bundle/YouCompleteMe && ./install.sh --clang-completer --gocode-completer
-```
-
-## Clone the repository and update submodules
-
-```
+```bash
 git clone git@github.com:kopiczko/vim-config.git ~/.vim
 cd ~/.vim && git submodule update --init --recursive
+```
+
+
+## Dealing with sumodules
+
+To add a submodule:
+
+```bash
+cd ~/.vim && git sumodule add REPO bundle/SUBMODULE
+```
+
+To remove a submodule:
+
+```bash
+path=bundle/SUBMODULE
+
+cd ./vim
+git submodule deinit -f -- ${path}
+rm -rf .git/modules/${path}
+git rm -rf ${path}
 ```
