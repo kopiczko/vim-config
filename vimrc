@@ -20,12 +20,14 @@ endif
 syntax on
 filetype plugin indent on
 
-set noerrorbells             " No beeps
-set noswapfile               " Don't use swapfile
-set nobackup                 " Don't create annoying backup files
-set nosplitright             " Split vertical windows left bo the current windows
-set splitbelow               " Split horizontal windows below to the current windows
 set hidden
+set nobackup                 " Don't create annoying backup files
+set noerrorbells             " No beeps
+set nojoinspaces             " No double space after a dot
+set nosplitright             " Split vertical windows left bo the current windows
+set noswapfile               " Don't use swapfile
+set spellcapcheck=''         " Allow sentences starting with lower letter
+set splitbelow               " Split horizontal windows below to the current windows
 
 " statusline always visible
 set laststatus=2
@@ -160,14 +162,23 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 " }}}
 
-" fzf {
+" fzf {{{
 " git ls-files -co -x vendor
 nnoremap <c-p> :FZF!<CR>
-" }
+" }}}
 
 " tagbar {{{
 nmap <F3> :TagbarToggle<CR>
 let g:tagbar_sort = 0
+" }}}
+
+" youcompleteme {{{
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+" }}}
+
+" ultisnips {{{
+let g:UltiSnipsUsePythonVersion = 3
 " }}}
 
 " vim-go {{{
@@ -186,6 +197,33 @@ augroup vimgo
   autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
 
 augroup END
+
+let g:tagbar_type_go = {
+            \ 'ctagstype' : 'go',
+            \ 'kinds'     : [
+            \ 'p:package',
+            \ 'c:constants',
+            \ 'v:variables',
+            \ 't:types',
+            \ 'n:interfaces',
+            \ 'w:fields',
+            \ 'e:embedded',
+            \ 'm:methods',
+            \ 'r:constructor',
+            \ 'f:functions'
+            \ ],
+            \ 'sro' : '.',
+            \ 'kind2scope' : {
+            \ 't' : 'ctype',
+            \ 'n' : 'ntype'
+            \ },
+            \ 'scope2kind' : {
+            \ 'ctype' : 't',
+            \ 'ntype' : 'n'
+            \ },
+            \ 'ctagsbin'  : 'gotags',
+            \ 'ctagsargs' : '-sort -silent'
+            \ }
 
 " }}}
 
@@ -239,6 +277,16 @@ augroup markdown
   autocmd!
   autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 augroup END
+" }}}
+
+" yaml {{{
+augroup my-yaml
+  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+augroup END
+" }}}
+
+" notes {{{
+command! GS edit $HOME/org/notes/giantswarm.md
 " }}}
 
 noremap <F2> :NERDTreeFind<CR>
