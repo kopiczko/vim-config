@@ -37,7 +37,8 @@ set ignorecase
 set smartcase
 set hlsearch
 set incsearch
-nnoremap <silent> <CR> :nohlsearch<CR>
+nnoremap <silent> <CR> :nohlsearch<CR>           " Map enter to disable search highlight.
+autocmd FileType qf nnoremap <buffer> <CR> <CR>  " Remap CR back in {quick,location} list.
 
 " tabs
 set tabstop=8
