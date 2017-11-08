@@ -233,9 +233,11 @@ augroup END
 " }}}
 
 " markdown {{{
+let g:markdown_fenced_languages = ['bash=sh', 'go', 'html', 'python']
+
 augroup markdown
   autocmd!
-  autocmd BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+  autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 augroup END
 " }}}
 
