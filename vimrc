@@ -38,7 +38,10 @@ set smartcase
 set hlsearch
 set incsearch
 nnoremap <silent> <CR> :nohlsearch<CR>           " Map enter to disable search highlight.
-autocmd FileType qf nnoremap <buffer> <CR> <CR>  " Remap CR back in {quick,location} list.
+
+" quickfix
+autocmd FileType qf nnoremap <buffer> <CR> <CR>  " Remap CR back in {quick,location}list.
+autocmd FileType qf wincmd J                     " Place the {quick,location}list on the bottom.
 
 " tabs
 set tabstop=8
@@ -185,7 +188,8 @@ let g:UltiSnipsUsePythonVersion = 3
 " }}}
 
 " vim-go {{{
-let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
+" TODO use gometalinter maybe also consider Neomake
+let g:syntastic_go_checkers = ['go', 'govet', 'errcheck'] " , 'golint'
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 let g:go_fmt_command = "goimports"
