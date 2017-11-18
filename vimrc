@@ -192,6 +192,7 @@ let g:UltiSnipsUsePythonVersion = 3
 let g:syntastic_go_checkers = ['go', 'govet', 'errcheck'] " , 'golint'
 let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
+let g:go_addtags_transform = 'camelcase'
 let g:go_fmt_command = "goimports"
 
 augroup vimgo
