@@ -147,6 +147,13 @@ else
 endif
 " }}}
 
+" nerdtree {{{
+noremap <F2> :NERDTreeFind<CR>
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" }}}
+
 " lightline {{{
 let g:lightline = {
   \ 'colorscheme': 'PaperColor',
@@ -203,6 +210,7 @@ augroup vimgo
   autocmd FileType go nmap <buffer> <C-]> <Plug>(go-def)
 
   autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
+  autocmd FileType go command! T GoTest
 
   autocmd BufWritePost *.go :SyntasticCheck
 augroup END
@@ -294,8 +302,9 @@ augroup my-yaml
 augroup END
 " }}}
 
-" notes {{{
+" commands {{{
 command! GS edit $HOME/org/notes/giantswarm.md
-" }}}
+command! LocalGuides edit /keybase/private/kopiczko/giantswarm/local_guides.md
 
-noremap <F2> :NERDTreeFind<CR>
+command! QQQ :qa!
+" }}}
