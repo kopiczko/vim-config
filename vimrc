@@ -97,6 +97,8 @@ nnoremap <S-h> :bp<CR>
 nnoremap <S-l> :bn<CR>
 nnoremap j gj
 nnoremap k gk
+" close buffer without changing window splits
+nnoremap <C-c> :bp\|bd #<CR>
 
 vnoremap " <esc><esc>`<i"<esc>`>la"<esc>
 
@@ -201,6 +203,8 @@ let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 
 let g:go_addtags_transform = 'camelcase'
 let g:go_fmt_command = "goimports"
+let g:go_gocode_autobuild = 1
+let g:go_metalinter_enabled = 1
 
 augroup vimgo
   autocmd!
@@ -212,7 +216,7 @@ augroup vimgo
   autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
   autocmd FileType go command! T GoTest
 
-  autocmd BufWritePost *.go :SyntasticCheck
+  "autocmd BufWritePost *.go :SyntasticCheck
 augroup END
 
 let g:tagbar_type_go = {
