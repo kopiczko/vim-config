@@ -187,7 +187,7 @@ let g:tagbar_sort = 0
 " }}}
 
 " youcompleteme {{{
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>', '<tab>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
 
 set completeopt-=preview
@@ -195,6 +195,10 @@ set completeopt-=preview
 
 " ultisnips {{{
 let g:UltiSnipsUsePythonVersion = 3
+let g:UltiSnipsExpandTrigger = '<c-j>'
+let g:UltiSnipsListSnippets = '<c-tab>'
+let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 " }}}
 
 " vim-go {{{
