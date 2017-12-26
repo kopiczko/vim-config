@@ -1,0 +1,32 @@
+snippet /^package/ "package declaration" r
+package ${1:`!v expand('%:p:h:t')`}
+endsnippet
+
+snippet iferr "if err" b
+if err != nil {
+	log.${1:Fatal}(err)
+}
+endsnippet
+
+# gs: if error: mask
+snippet ifmask "if err mask" b
+if err != nil {
+	return $1microerror.Mask(err)
+}
+endsnippet
+
+snippet printf "fmt.Printf()" b
+fmt.Printf("${1:%#v}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\))/}$2${1/([^%]|%%)*(%.)?.*/(?2:\))/}
+endsnippet
+
+#
+# var invalidConfigError = microerror.New("invalid config")
+#
+snippet varerror "var *Error" b
+var ${1/\s(\w)/\u$1/g}Error = microerror.New("${1:invalid config}")
+
+// Is${1/^(\w)|\s(\w)/(?1:\u$1)(?2:\u$2)/g} asserts ${1/\s(\w)/\u$1/g}Error.
+func Is${1/^(\w)|\s(\w)/(?1:\u$1)(?2:\u$2)/g}(err error) bool {
+	return microerror.Cause(err) == ${1/\s(\w)/\u$1/g}Error
+}
+endsnippet
