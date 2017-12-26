@@ -127,7 +127,8 @@ endif
 " }}}
 
 " color theme {{{
-colorscheme PaperColor
+" colorscheme PaperColor
+colorscheme vylight
 
 set background=light
 highlight Visual ctermbg=Grey
