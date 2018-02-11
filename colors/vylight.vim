@@ -14,13 +14,12 @@ if exists("syntax_on")
 endif
 let g:colors_name="vylight"
 
-
 hi Normal        guifg=#111111  guibg=white
 hi Title         guifg=black    guibg=white
 hi Cursor                       guibg=#FF7311
 hi LineNr        guifg=#bebebe  guibg=#f8f8f8
 hi Visual                       guibg=#bbddff
-hi NonText       guifg=#fafafa  guibg=#fafafa
+hi NonText       guifg=#dddddd                 gui=none
 hi StatusLine    guifg=#222222  guibg=#eeeeee  gui=none
 hi StatusLineNC  guifg=#888888  guibg=#eeeeee  gui=none
 hi VertSplit     guifg=#eeeeee  guibg=#eeeeee  gui=none
@@ -78,3 +77,5 @@ hi link Tag             Special
 hi link SpecialChar     Special
 hi link SpecialComment  Special
 hi link Debug           Special
+
+hi link SpecialKey NonText
