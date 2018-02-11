@@ -1,11 +1,18 @@
+snippet append
+${1:v} = append($1, $0)
+
+endsnippet
+
 snippet /^package/ "package declaration" r
 package ${1:`!v expand('%:p:h:t')`}
+
 endsnippet
 
 snippet iferr "if err" b
 if err != nil {
 	log.${1:Fatal}(err)
 }
+
 endsnippet
 
 # gs: if error: mask
@@ -13,6 +20,19 @@ snippet ifmask "if err mask" b
 if err != nil {
 	return $1microerror.Mask(err)
 }
+
+endsnippet
+
+snippet i_apiextensionsclient "import apiextensionsclient" b
+apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
+endsnippet
+
+snippet i_corev1 "import metav1" b
+corev1 "k8s.io/api/core/v1"
+endsnippet
+
+snippet i_metav1 "import metav1" b
+metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 endsnippet
 
 snippet printf "fmt.Printf()" b
@@ -29,4 +49,14 @@ var ${1/\s(\w)/\u$1/g}Error = microerror.New("${1:invalid config}")
 func Is${1/^(\w)|\s(\w)/(?1:\u$1)(?2:\u$2)/g}(err error) bool {
 	return microerror.Cause(err) == ${1/\s(\w)/\u$1/g}Error
 }
+endsnippet
+
+#
+# if config.N == nil {
+#
+snippet invalidconfig "if config.N == nil" b
+if config.${1:Name} == ${2:nil} {
+	return nil, microerror.Maskf(invalidConfigError, "config.$1 must not be empty")
+}
+
 endsnippet
