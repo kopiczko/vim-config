@@ -99,3 +99,4 @@ cd ~/.vim && git rm bundle/SUBMODULE
 [neovim]: https://neovim.io
 [pathogen]: https://github.com/tpope/vim-pathogen
 [pyenv]: https://github.com/pyenv/pyenv
+[rbenv]: https://github.com/rbenv/rbenv
