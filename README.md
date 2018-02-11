@@ -1,10 +1,24 @@
 ## Install
 
+I'm a [neovim][neovim] user, but this configuration should also work with
+vanilla vim8.
+
 Clone the repository and update submodules.
 
 ```bash
 git clone git@github.com:kopiczko/vim-config.git ~/.vim
 cd ~/.vim && git submodule update --init --recursive
+```
+
+Wire vim and [neovim][neovim] config path.
+
+```bash
+config_dir=$XDG_CONFIG_HOME
+if [[ -z $config_dir ]]; then
+    config_dir=$HOME/.config
+fi
+
+ln -s ~/.vim $config_dir/nvim
 ```
 
 ## Plugins
