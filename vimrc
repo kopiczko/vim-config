@@ -120,12 +120,14 @@ endif
 
 " }}}
 
-" python {{{
+" python & ruby {{{
 "
 " https://github.com/zchee/deoplete-jedi/wiki/Setting-up-Python-for-Neovim
 if has('nvim')
   let g:python_host_prog = $HOME.'/.pyenv/versions/2.7.14/bin/python'
   let g:python3_host_prog = $HOME.'/.pyenv/versions/3.6.3/bin/python'
+
+  let g:ruby_host_prog = $HOME.'/.rbenv/versions/2.4.2/bin/ruby'
 endif
 " }}}
 
