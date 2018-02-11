@@ -1,0 +1,39 @@
+snippet bang "shebang" b
+#!/usr/bin/env bash
+endsnippet
+
+snippet dir "script directory" b
+dir=\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )
+endsnippet
+
+snippet flags "handling flags example" b
+aflag=no
+bflag=no
+
+while [ \$# -gt 0 ]
+do
+    case "\$1" in
+    -a) aflag=yes;;
+    -b) bflag=yes;;
+    -f) flist="\$flist \$2"; shift;;
+    --single) single="\$2"; shift;;
+    --) shift; break;;
+    -*) echo "unrecognised option \$1" 1>&2; exit 1;;
+    *)  break;;
+    esac
+    shift
+done
+endsnippet
+
+snippet modeline "add bash modeline" b
+# ex: ts=4 sw=4 et ft=sh
+endsnippet
+
+snippet ostype "detect os type" b
+set os
+case \$OSTYPE in
+    darwin*) os="darwin" ;;
+    linux*) os="linux" ;;
+    *) echo "ERROR unsuported OS \$OSTYPE" >&2 ; exit 1 ;;
+esac
+endsnippet
