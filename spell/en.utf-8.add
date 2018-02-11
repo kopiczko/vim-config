@@ -16,8 +16,12 @@ bfs
 bool
 bundle
 c
+changelog
+cidr
+cloudconfig
 cmd
 config
+configmap
 configmaps
 consumes
 coreos
@@ -32,6 +36,7 @@ diff
 dns
 draggable
 dst
+ec2
 env
 etcd
 f
@@ -52,6 +57,7 @@ goroutines
 gzip
 gzipped
 h
+helm
 hostname
 https
 hyperkube
@@ -74,6 +80,7 @@ microkit
 minikube
 mkdir
 mpeg
+mtu
 namespace
 namespaces
 newrelic
@@ -96,6 +103,7 @@ prd
 printf
 prometheus
 readme
+recordset
 refactor
 rsyslog
 s
@@ -139,6 +147,7 @@ v1
 variadic
 versioned
 vox
+vpc
 whitespaces
 wip
 yaml
