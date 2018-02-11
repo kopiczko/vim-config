@@ -4,7 +4,6 @@
 
 if has('nvim')
   set termguicolors
-  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
   set inccommand=nosplit " live substitution
 endif
@@ -48,6 +47,10 @@ set tabstop=8
 set shiftwidth=4
 set expandtab
 set shiftround
+
+" indentaion marks
+set list
+set listchars=tab:.\ ,eol:¬,trail:·
 
 " handle long lines
 set number
@@ -121,14 +124,17 @@ endif
 "
 " https://github.com/zchee/deoplete-jedi/wiki/Setting-up-Python-for-Neovim
 if has('nvim')
-  let g:python_host_prog = $HOME.'/.pyenv/versions/neovim2/bin/python'
-  let g:python3_host_prog = $HOME.'/.pyenv/versions/neovim3/bin/python'
+  let g:python_host_prog = $HOME.'/.pyenv/versions/2.7.14/bin/python'
+  let g:python3_host_prog = $HOME.'/.pyenv/versions/3.6.3/bin/python'
 endif
 " }}}
 
 " color theme {{{
 " colorscheme PaperColor
 colorscheme vylight
+" invisible character colors
+highlight NonText guifg=#4a4a59
+highlight SpecialKey guifg=#4a4a59
 
 set background=light
 highlight Visual ctermbg=Grey
@@ -217,6 +223,7 @@ augroup vimgo
   autocmd FileType go nmap <buffer> <leader>r <Plug>(go-run)
   autocmd FileType go nmap <buffer> <leader>d <Plug>(go-doc)
   autocmd FileType go nmap <buffer> <C-]> <Plug>(go-def)
+  "autocmd FileType go nmap <buffer> <C-]> :execute 'YcmCompleter GoTo'<CR>
 
   autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
   autocmd FileType go command! T GoTest
