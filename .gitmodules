@@ -48,7 +48,7 @@
 	url = git@github.com:junegunn/fzf.git
 [submodule "bundle/ultisnips"]
 	path = bundle/ultisnips
-	url = git://github.com/SirVer/ultisnips.git
+	url = git@github.com:SirVer/ultisnips.git
 [submodule "/Users/pawel/.vim/bundle/vim-markdown"]
-	path = /Users/pawel/.vim/bundle/vim-markdown
-	url = https://github.com/tpope/vim-markdown
+	path = bundle/vim-markdown
+	url = git@github.com:tpope/vim-markdown
