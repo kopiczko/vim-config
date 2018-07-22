@@ -167,10 +167,16 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " lightline {{{
 let g:lightline = {
-  \ 'colorscheme': 'PaperColor',
-  \ }
-let g:airline#extensions#tabline#enabled = 1
-let g:airline_powerline_fonts = 1
+            \ 'colorscheme': 'PaperColor',
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \             [ 'gitbranch', 'readonly' ],
+            \             [ 'absolutepath', 'modified' ] ]
+            \ },
+            \ 'component_function': {
+            \   'gitbranch': 'fugitive#head'
+            \ },
+            \ }
 " }}}
 
 " syntastic {{{
