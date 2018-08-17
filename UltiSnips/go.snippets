@@ -27,7 +27,11 @@ snippet i_apiextensionsclient "import apiextensionsclient" b
 apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 endsnippet
 
-snippet i_corev1 "import metav1" b
+snippet i_apierrors "import apierrors" b
+apierrors "k8s.io/apimachinery/pkg/api/errors"
+endsnippet
+
+snippet i_corev1 "import corev1" b
 corev1 "k8s.io/api/core/v1"
 endsnippet
 
@@ -39,15 +43,40 @@ snippet printf "fmt.Printf()" b
 fmt.Printf("${1:%#v}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\))/}$2${1/([^%]|%%)*(%.)?.*/(?2:\))/}
 endsnippet
 
-#
-# var invalidConfigError = microerror.New("invalid config")
-#
-snippet varerror "var *Error" b
-var ${1/\s(\w)/\u$1/g}Error = microerror.New("${1:invalid config}")
+snippet panicf "panic(fmt.Sprintf(...))"
+panic(fmt.Spritnf("$0"))
+endsnippet
 
-// Is${1/^(\w)|\s(\w)/(?1:\u$1)(?2:\u$2)/g} asserts ${1/\s(\w)/\u$1/g}Error.
-func Is${1/^(\w)|\s(\w)/(?1:\u$1)(?2:\u$2)/g}(err error) bool {
-	return microerror.Cause(err) == ${1/\s(\w)/\u$1/g}Error
+snippet log "o.logger.LogCtx(ctx, ..."
+${1:receiver}.logger.LogCtx(ctx, "level", "${2:debug}", "message", "$0")
+endsnippet
+
+snippet logf "o.logger.LogCtx(ctx, ..."
+${1:receiver}.logger.LogCtx(ctx, "level", "${2:debug}", "message", fmt.Sprintf("$0"))
+endsnippet
+
+
+snippet logerr "o.logger.LogCtx(ctx, ..."
+${1:receiver}.logger.LogCtx(ctx, "level", "error", "message", "$0", "stack", fmt.Sprintf("%#v", err))
+endsnippet
+
+snippet logcancel "canceling resource reconciliation..."
+${1:receiver}.logger.LogCtx(ctx, "level", "${2:debug}", "message", "canceling resource reconciliation for custom object")
+endsnippet
+
+#
+# var invalidConfigError = ...
+#
+# Old snippet, cool example:
+#var ${1/\s(\w)/\u$1/g}Error = microerror.New("${1:invalid config}")
+snippet varerror "var *Error" b
+var ${1:invalidConfig}Error = &microerror.Error{
+	Kind: "$1Error",
+}
+
+// Is${1/./\u$0/} asserts $1Error.
+func Is${1/./\u$0/}(err error) bool {
+	return microerror.Cause(err) == $1Error
 }
 endsnippet
 
@@ -56,7 +85,76 @@ endsnippet
 #
 snippet invalidconfig "if config.N == nil" b
 if config.${1:Name} == ${2:nil} {
-	return nil, microerror.Maskf(invalidConfigError, "config.$1 must not be empty")
+	return nil, microerror.Maskf(invalidConfigError, "%T.$1 must not be empty", config)
 }
 
+endsnippet
+
+#
+# if err := config.N.Validate(); err == nil {
+#
+snippet invalidconfigvalidate "if config.N == nil" b
+if err := config.${1:Name}.Validate(); err != nil {
+	return nil, microerror.Maskf(invalidConfigError, "config.$1.%s", err)
+}
+$0
+endsnippet
+
+
+#
+# tc.errorMatcher
+#
+snippet iferrormatcher "if tc.errorMatcher ..." b
+if err != nil {
+	if tc.ErrorMatcher == nil {
+		t.Fatalf("unexpected error %#v", err)
+	} else if !tc.ErrorMatcher(err) {
+		t.Fatalf("unexpected error %#v", err)
+	}
+}
+$0
+endsnippet
+
+#
+# table test
+#
+snippet test "table test" b
+func Test_${1:Name}(t *testing.T) {
+	testCases := []struct {
+		name         string
+		errorMatcher func(err error) bool
+	}{
+		{
+			name:         "case 0",
+			errorMatcher: nil,
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			$0
+
+			switch {
+			case err == nil && tc.errorMatcher == nil:
+				// correct; carry on
+			case err != nil && tc.errorMatcher == nil:
+				t.Fatalf("error == %#v, want nil", err)
+			case err == nil && tc.errorMatcher != nil:
+				t.Fatalf("error == nil, want non-nil")
+			case !tc.errorMatcher(err):
+				t.Fatalf("error == %#v, want matching", err)
+			}
+
+			if tc.errorMatcher != nil {
+				return
+			}
+		})
+	}
+}
+endsnippet
+
+snippet testcheck "t.Fatalf"
+if !reflect.DeepEqual(${1:Name}, tc.expected${1/.*/\u$0/}) {
+	t.Fatalf("$1 == %q, want %q", ${1}, tc.expected${1/.*/\u$0/})
+}
 endsnippet

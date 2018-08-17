@@ -2,6 +2,18 @@ snippet bang "shebang" b
 #!/usr/bin/env bash
 endsnippet
 
+snippet case "script directory" b
+case ${1:var} in
+[1-6]*)
+    $0
+    ;;
+9[1-8])
+    ;;
+*)
+  ;;
+esac
+endsnippet
+
 snippet dir "script directory" b
 dir=\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )
 endsnippet
