@@ -1,0 +1,15 @@
+snippet envopt "getEnvVarOptional" b
+${1:name}, err := getEnvVarOptional(EnvVar${1/.*/\u$0/})
+if err != nil {
+	return ${2:nil}, microerror.Mask(err)
+}
+$0
+endsnippet
+
+snippet envreq "getEnvVarRequired" b
+${1:name}, err := getEnvVarRequired(EnvVar${1/.*/\u$0/})
+if err != nil {
+	return ${2:nil}, microerror.Mask(err)
+}
+$0
+endsnippet

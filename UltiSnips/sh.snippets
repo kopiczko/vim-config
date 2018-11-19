@@ -1,3 +1,11 @@
+snippet $ "${var}"
+${${1:var}}$0
+endsnippet
+
+snippet var "${var}"
+${${1:var}}$0
+endsnippet
+
 snippet bang "shebang" b
 #!/usr/bin/env bash
 endsnippet
@@ -48,4 +56,12 @@ case \$OSTYPE in
     linux*) os="linux" ;;
     *) echo "ERROR unsuported OS \$OSTYPE" >&2 ; exit 1 ;;
 esac
+endsnippet
+
+snippet iferr "if [[ $? -ne 0 ]]" b
+local ret=$?
+if [[ $ret -ne 0 ]]; then
+    echo "error: $0" >&2
+    return $ret
+fi
 endsnippet

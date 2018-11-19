@@ -44,7 +44,7 @@ fmt.Printf("${1:%#v}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\))/}$2${1/([^%]|%%)*(%.)?.*
 endsnippet
 
 snippet panicf "panic(fmt.Sprintf(...))"
-panic(fmt.Spritnf("$0"))
+panic(fmt.Sprintf("$0"))
 endsnippet
 
 snippet log "o.logger.LogCtx(ctx, ..."
@@ -77,6 +77,34 @@ var ${1:invalidConfig}Error = &microerror.Error{
 // Is${1/./\u$0/} asserts $1Error.
 func Is${1/./\u$0/}(err error) bool {
 	return microerror.Cause(err) == $1Error
+}
+endsnippet
+
+snippet varerrorre "error with regexp" b
+var (
+	$1Regexp = regexp.MustCompile(\`${0:\\S+ not exists}\`)
+)
+
+var ${1:notFound}Error = &microerror.Error{
+	Kind: "$1Error",
+}
+
+// Is${1/./\u$0/} asserts $1Error.
+func Is${1/./\u$0/}(err error) bool {
+	if err == nil {
+		return false
+	}
+
+	c := microerror.Cause(err)
+
+	if c == $1Error {
+		return true
+	}
+	if $1Regexp.MatchString(c.Error()) {
+		return true
+	}
+
+	return false
 }
 endsnippet
 
@@ -155,6 +183,6 @@ endsnippet
 
 snippet testcheck "t.Fatalf"
 if !reflect.DeepEqual(${1:Name}, tc.expected${1/.*/\u$0/}) {
-	t.Fatalf("$1 == %q, want %q", ${1}, tc.expected${1/.*/\u$0/})
+	t.Fatalf("$1 == %v, want %v", $1, tc.expected${1/.*/\u$0/})
 }
 endsnippet

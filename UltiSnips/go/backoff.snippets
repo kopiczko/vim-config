@@ -1,0 +1,11 @@
+snippet /backoff/ "backoff" r
+o := func() error {
+	$0
+}
+b := backoff.NewExponential(backoff.ShortMaxWait, backoff.ShortMaxInterval)
+n := backoff.NewNotifier(${1:r.logger}, ctx)
+err := backoff.RetryNotify(o, b, n)
+if err != nil {
+	return microerror.Mask(err)
+}
+endsnippet
