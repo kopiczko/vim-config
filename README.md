@@ -83,7 +83,7 @@ submodules.
 ### Adding a Submodule
 
 ```bash
-cd ~/.vim && git sumodule add REPO bundle/SUBMODULE
+cd ~/.vim && git submodule add REPO bundle/SUBMODULE
 ```
 
 - After adding a plugin/submodule run `:Helptags` command inside your vim.
