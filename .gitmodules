@@ -55,3 +55,6 @@
 [submodule "bundle/file-line"]
 	path = bundle/file-line
 	url = git@github.com:bogado/file-line.git
+[submodule "bundle/vim-easy-align"]
+	path = bundle/vim-easy-align
+	url = git@github.com:junegunn/vim-easy-align.git
