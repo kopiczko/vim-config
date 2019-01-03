@@ -230,8 +230,8 @@ augroup vimgo
 
   autocmd FileType go nmap <buffer> <leader>r <Plug>(go-run)
   autocmd FileType go nmap <buffer> <leader>d <Plug>(go-doc)
-  autocmd FileType go nmap <buffer> <C-]> <Plug>(go-def)
-  "autocmd FileType go nmap <buffer> <C-]> :execute 'YcmCompleter GoTo'<CR>
+  "autocmd FileType go nmap <buffer> <C-]> <Plug>(go-def)
+  autocmd FileType go nmap <buffer> <C-]> :execute 'YcmCompleter GoTo'<CR>
 
   autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
   autocmd FileType go command! T GoTest
