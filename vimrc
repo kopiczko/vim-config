@@ -38,6 +38,10 @@ set hlsearch
 set incsearch
 nnoremap <silent> <CR> :nohlsearch<CR>           " Map enter to disable search highlight.
 
+" Persistent undo.
+set undofile
+set undodir=~/.vim/undo
+
 " quickfix
 autocmd FileType qf nnoremap <buffer> <CR> <CR>  " Remap CR back in {quick,location}list.
 autocmd FileType qf wincmd J                     " Place the {quick,location}list on the bottom.
