@@ -120,6 +120,11 @@ endif
 
 " }}}
 
+" clean whitespace & indentation {{{
+" Remove trailing wthiespace for following file types.
+autocmd FileType bash,c,cpp,go,java,javascript,markdown,php,sh autocmd BufWritePre <buffer> %s/\s\+$//e
+" }}}
+
 " python & ruby {{{
 "
 " https://github.com/zchee/deoplete-jedi/wiki/Setting-up-Python-for-Neovim
