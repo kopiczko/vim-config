@@ -25,7 +25,6 @@ set noerrorbells             " No beeps
 set nojoinspaces             " No double space after a dot
 set nosplitright             " Split vertical windows left bo the current windows
 set noswapfile               " Don't use swapfile
-set spellcapcheck=''         " Allow sentences starting with lower letter
 set splitbelow               " Split horizontal windows below to the current windows
 
 " statusline always visible
@@ -37,6 +36,18 @@ set smartcase
 set hlsearch
 set incsearch
 nnoremap <silent> <CR> :nohlsearch<CR>           " Map enter to disable search highlight.
+
+" Spell.
+set spellcapcheck=       " Allow sentences starting with lower letter
+set spelllang=en,custom
+set spell
+
+function! MyMkspell()
+    :echo '---> creating en.utf-8.add.spl'
+    :mkspell! ~/.vim/spell/en.utf-8.add.spl ~/.vim/spell/en.utf-8.add
+    :echo '---> creating custom.utf-8.spl'
+    :mkspell! ~/.vim/spell/custom.utf-8.spl ~/.vim/spell/custom.utf-8
+endfunction
 
 " Persistent undo.
 set undofile
@@ -336,6 +347,7 @@ augroup END
 " }}}
 
 " commands {{{
+command! Mkspell call MyMkspell()
 command! GS edit $HOME/org/notes/giantswarm.md
 command! LocalGuides edit /keybase/private/kopiczko/giantswarm/local_guides.md
 
