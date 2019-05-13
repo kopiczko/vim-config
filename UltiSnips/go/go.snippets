@@ -146,7 +146,7 @@ func Test_${1:Name}(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		t.Run(tc.name, func(t *testing.T) {
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			$0
 
 			switch {
@@ -168,8 +168,8 @@ func Test_${1:Name}(t *testing.T) {
 }
 endsnippet
 
-snippet testcheck "t.Fatalf"
-if !reflect.DeepEqual(${1:Name}, tc.expected${1/.*/\u$0/}) {
-	t.Fatalf("$1 == %v, want %v", $1, tc.expected${1/.*/\u$0/})
+snippet iftest "t.Fatalf"
+if !cmp.Equal(${1:Name}, tc.expected$2) {
+	t.Fatalf("\n\n%s\n", cmp.Diff($1, tc.expected$2))
 }
 endsnippet
