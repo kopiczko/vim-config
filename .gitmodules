@@ -58,3 +58,6 @@
 [submodule "bundle/vim-easy-align"]
 	path = bundle/vim-easy-align
 	url = git@github.com:junegunn/vim-easy-align.git
+[submodule "bundle/deoplete"]
+	path = bundle/deoplete
+	url = git@github.com:Shougo/deoplete.nvim.git

@@ -49,6 +49,10 @@ function! MyMkspell()
     :mkspell! ~/.vim/spell/custom.utf-8.spl ~/.vim/spell/custom.utf-8
 endfunction
 
+" Paste
+" Reselect previously yanked text after paste.
+xnoremap p pgvy
+
 " Persistent undo.
 set undofile
 set undodir=~/.vim/undo
@@ -127,7 +131,6 @@ iabbrev @@ kopiczko@gmail.com
 iabbrev retunr return
 iabbrev reutnr return
 
-execute pathogen#infect()
 if has('mac')       " mac settigns
 elseif has('unix')  " linux settings
   let g:netrw_browsex_viewer = 'xdg-open'
@@ -162,19 +165,39 @@ set background=light
 highlight Visual ctermbg=Grey
 " }}}
 
-" window navigation {{{
+"execute pathogen#infect()
+call plug#begin('~/.local/share/nvim/plugged')
+
+Plug '/usr/local/opt/fzf'
+Plug 'bogado/file-line'
+Plug 'christoomey/vim-tmux-navigator'
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'tag': '*' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'itchyny/lightline.vim'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-markdown'
+if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+endif
+
+call plug#end()
+
+
+" tmux navigator {{{
 let g:tmux_navigator_no_mappings = 1
 if !empty($TMUX)
-  nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
-  nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
-  nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
-  nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
-  nnoremap <silent> <Esc>\ :TmuxNavigatePrevious<cr>
+    nnoremap <silent> <M-h> :TmuxNavigateLeft<cr>
+    nnoremap <silent> <M-j> :TmuxNavigateDown<cr>
+    nnoremap <silent> <M-k> :TmuxNavigateUp<cr>
+    nnoremap <silent> <M-l> :TmuxNavigateRight<cr>
+    nnoremap <silent> <Esc>\ :TmuxNavigatePrevious<cr>
 else
-  nnoremap <silent> <M-h> <C-w>h
-  nnoremap <silent> <M-j> <C-w>j
-  nnoremap <silent> <M-k> <C-w>k
-  nnoremap <silent> <M-l> <C-w>l
+    nnoremap <silent> <M-h> <C-w>h
+    nnoremap <silent> <M-j> <C-w>j
+    nnoremap <silent> <M-k> <C-w>k
+    nnoremap <silent> <M-l> <C-w>l
 endif
 " }}}
 
@@ -194,20 +217,17 @@ let g:lightline = {
             \             [ 'absolutepath', 'modified' ] ]
             \ },
             \ 'component_function': {
-            \   'gitbranch': 'fugitive#head'
+            \     'gitbranch': 'fugitive#head'
             \ },
             \ }
 " }}}
 
-" syntastic {{{
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" deoplete {{{
+let g:deoplete#enable_at_startup = 1
+"call deoplete#custom#source('_', 'matchers', ['matcher_full_fuzzy'])
+call deoplete#custom#option('omni_patterns', {
+            \     'go': '[^. *\t]\.\w*',
+            \ })
 " }}}
 
 " fzf {{{
@@ -246,17 +266,17 @@ let g:go_gocode_autobuild = 1
 let g:go_metalinter_enabled = 1
 
 augroup vimgo
-  autocmd!
+autocmd!
 
-  autocmd FileType go nmap <buffer> <leader>r <Plug>(go-run)
-  autocmd FileType go nmap <buffer> <leader>d <Plug>(go-doc)
-  "autocmd FileType go nmap <buffer> <C-]> <Plug>(go-def)
-  autocmd FileType go nmap <buffer> <C-]> :execute 'YcmCompleter GoTo'<CR>
+autocmd FileType go nmap <buffer> <leader>r <Plug>(go-run)
+autocmd FileType go nmap <buffer> <leader>d <Plug>(go-doc-browser)
+autocmd FileType go nmap <buffer> <C-]> <Plug>(go-def)
+"autocmd FileType go nmap <buffer> <C-]> :execute 'YcmCompleter GoTo'<CR>
 
-  autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
-  autocmd FileType go command! T GoTest
+autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
+autocmd FileType go command! T GoTest
 
-  "autocmd BufWritePost *.go :SyntasticCheck
+"autocmd BufWritePost *.go :SyntasticCheck
 augroup END
 
 let g:tagbar_type_go = {
@@ -285,71 +305,27 @@ let g:tagbar_type_go = {
             \ 'ctagsbin'  : 'gotags',
             \ 'ctagsargs' : '-sort -silent'
             \ }
-
 " }}}
 
-" tern_for_vim {{{
-
-augroup ternforvim
-  autocmd!
-
-  autocmd FileType javascript nmap <buffer> <C-]> :TernDef<CR>
-
-  autocmd FileType javascript setlocal tabstop=4 shiftwidth=4 softtabstop=4
-augroup END
-
-" }}}
-
-" rust {{{
-let g:ftplugin_rust_source_path = $HOME.'/code/rust-lang/rust/src'
-let g:rustfmt_autosave = 1
-
-" vim-racer
-let g:racer_cmd=$HOME.'/.cargo/bin/racer'
-let g:racer_no_default_keymappings = 1
-
-" tagbar settings for rust
-let g:tagbar_type_rust = {
-   \ 'ctagstype' : 'rust',
-   \ 'kinds' : [
-       \'T:types,type definitions',
-       \'f:functions,function definitions',
-       \'g:enum,enumeration names',
-       \'s:structure names',
-       \'m:modules,module names',
-       \'c:consts,static constants',
-       \'t:traits,traits',
-       \'i:impls,trait implementations',
-   \]
-   \}
-
-augroup rust
-  autocmd!
-
-  autocmd filetype rust nmap <buffer> <c-]> <Plug>RacerGoToDefinitionDrect
-augroup END
-
-" }}}
-
-" markdown {{{
-let g:markdown_fenced_languages = ['bash=sh', 'go', 'html', 'python']
-
-augroup markdown
-  autocmd!
-  autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-augroup END
+" vim-markdown {{{
+let g:markdown_fenced_languages = [
+            \ "go",
+            \ 'bash=sh',
+            \ 'html',
+            \ 'javascript',
+            \ 'python',
+            \ ]
+let g:markdown_minlines = 100
 " }}}
 
 " yaml {{{
 augroup my-yaml
-  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 augroup END
 " }}}
 
 " commands {{{
 command! Mkspell call MyMkspell()
-command! GS edit $HOME/org/notes/giantswarm.md
-command! LocalGuides edit /keybase/private/kopiczko/giantswarm/local_guides.md
 
-command! QQQ :qa!
+command! Q :qa!
 " }}}
