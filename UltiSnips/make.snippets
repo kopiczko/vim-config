@@ -1,0 +1,8 @@
+snippet top "${var}"
+T_BOLD=$(shell tput bold)
+T_NORMAL=$(shell tput sgr0)
+endsnippet
+
+snippet bold "${var}"
+@echo "$(T_BOLD)---> ${1:Message}$(T_NORMAL)"$0
+endsnippet

@@ -1,0 +1,59 @@
+# var executionFailedError = ...
+snippet executionFailedError "var executionFailedError" b
+// executionFailedError is an error type for situations where Resource execution
+// cannot continue and must always fall back to operatorkit.
+//
+// This error should never be matched against and therefore there is no matcher
+// implement. For further information see:
+//
+//     https://github.com/giantswarm/fmt/blob/master/go/errors.md#matching-errors
+//
+var executionFailedError = &microerror.Error{
+	Kind: "executionFailedError",
+}
+endsnippet
+
+#
+# var youTypeItError = ...
+#
+# Old snippet, cool example:
+#var ${1/\s(\w)/\u$1/g}Error = microerror.New("${1:invalid config}")
+snippet varerror "var *Error" b
+var ${1:invalidConfig}Error = &microerror.Error{
+	Kind: "$1Error",
+}
+
+// Is${1/./\u$0/} asserts $1Error.
+func Is${1/./\u$0/}(err error) bool {
+	return microerror.Cause(err) == $1Error
+}
+endsnippet
+
+snippet varerrorre "error with regexp" b
+var (
+	$1Regexp = regexp.MustCompile(\`${0:\\S+ not exists}\`)
+)
+
+var ${1:notFound}Error = &microerror.Error{
+	Kind: "$1Error",
+}
+
+// Is${1/./\u$0/} asserts $1Error.
+func Is${1/./\u$0/}(err error) bool {
+	if err == nil {
+		return false
+	}
+
+	c := microerror.Cause(err)
+
+	if c == $1Error {
+		return true
+	}
+	if $1Regexp.MatchString(c.Error()) {
+		return true
+	}
+
+	return false
+}
+endsnippet
+

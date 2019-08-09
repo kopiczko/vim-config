@@ -44,55 +44,11 @@ endsnippet
 
 
 snippet logerr "o.logger.LogCtx(ctx, ..."
-${1:receiver}.logger.LogCtx(ctx, "level", "error", "message", "$0", "stack", fmt.Sprintf("%#v", err))
+${1:receiver}.logger.LogCtx(ctx, "level", "error", "message", "$0", "stack", microerror.Stack(err))
 endsnippet
 
 snippet logcancel "canceling resource reconciliation..."
 ${1:receiver}.logger.LogCtx(ctx, "level", "${2:debug}", "message", "canceling resource reconciliation for custom object")
-endsnippet
-
-#
-# var invalidConfigError = ...
-#
-# Old snippet, cool example:
-#var ${1/\s(\w)/\u$1/g}Error = microerror.New("${1:invalid config}")
-snippet varerror "var *Error" b
-var ${1:invalidConfig}Error = &microerror.Error{
-	Kind: "$1Error",
-}
-
-// Is${1/./\u$0/} asserts $1Error.
-func Is${1/./\u$0/}(err error) bool {
-	return microerror.Cause(err) == $1Error
-}
-endsnippet
-
-snippet varerrorre "error with regexp" b
-var (
-	$1Regexp = regexp.MustCompile(\`${0:\\S+ not exists}\`)
-)
-
-var ${1:notFound}Error = &microerror.Error{
-	Kind: "$1Error",
-}
-
-// Is${1/./\u$0/} asserts $1Error.
-func Is${1/./\u$0/}(err error) bool {
-	if err == nil {
-		return false
-	}
-
-	c := microerror.Cause(err)
-
-	if c == $1Error {
-		return true
-	}
-	if $1Regexp.MatchString(c.Error()) {
-		return true
-	}
-
-	return false
-}
 endsnippet
 
 #
@@ -145,7 +101,7 @@ func Test_${1:Name}(t *testing.T) {
 		},
 	}
 
-	for _, tc := range testCases {
+	for i, tc := range testCases {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			$0
 
@@ -165,11 +121,5 @@ func Test_${1:Name}(t *testing.T) {
 			}
 		})
 	}
-}
-endsnippet
-
-snippet iftest "t.Fatalf"
-if !cmp.Equal(${1:Name}, tc.expected$2) {
-	t.Fatalf("\n\n%s\n", cmp.Diff($1, tc.expected$2))
 }
 endsnippet

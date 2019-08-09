@@ -1,0 +1,6 @@
+snippet iftest "t.Fatalf"
+if !cmp.Equal(${1:Name}, tc.expected$2) {
+	t.Fatalf("\n\n%s\n", cmp.Diff(tc.expected$2, $1))
+}
+endsnippet
+
