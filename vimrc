@@ -1,4 +1,11 @@
 " vim: fdm=marker
+"
+"
+if has('nvim')
+    let $VIMHOME = $HOME . "/.config/nvim"
+else
+    let $VIMHOME = $HOME . "/.vim"
+endif
 
 " Vim Settings {{{
 
@@ -44,9 +51,9 @@ set spell
 
 function! MyMkspell()
     :echo '---> creating en.utf-8.add.spl'
-    :mkspell! ~/.vim/spell/en.utf-8.add.spl ~/.vim/spell/en.utf-8.add
+    :mkspell! $VIMHOME/spell/en.utf-8.add.spl $VIMHOME/spell/en.utf-8.add
     :echo '---> creating custom.utf-8.spl'
-    :mkspell! ~/.vim/spell/custom.utf-8.spl ~/.vim/spell/custom.utf-8
+    :mkspell! $VIMHOME/spell/custom.utf-8.spl $VIMHOME/spell/custom.utf-8
 endfunction
 
 " Paste
@@ -55,7 +62,7 @@ xnoremap p pgvy
 
 " Persistent undo.
 set undofile
-set undodir=~/.vim/undo
+set undodir=$VIMHOME/undo
 
 " quickfix
 autocmd FileType qf nnoremap <buffer> <CR> <CR>  " Remap CR back in {quick,location}list.
