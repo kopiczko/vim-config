@@ -312,6 +312,13 @@ let g:tagbar_type_go = {
             \ 'ctagsbin'  : 'gotags',
             \ 'ctagsargs' : '-sort -silent'
             \ }
+let g:tagbar_type_markdown = {
+            \ 'ctagstype' : 'markdown',
+            \ 'kinds' : [
+            \ 'h:headers'
+            \ ],
+            \ 'sort' : 0,
+            \ }
 " }}}
 
 " vim-markdown {{{
