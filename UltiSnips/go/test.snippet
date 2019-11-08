@@ -1,6 +1,50 @@
-snippet iftest "t.Fatalf"
+#
+# cmp.Diff
+#
+snippet iftest "cmp.Diff"
 if !cmp.Equal(${1:Name}, tc.expected$2) {
 	t.Fatalf("\n\n%s\n", cmp.Diff(tc.expected$2, $1))
+}
+endsnippet
+
+
+#
+# table test
+#
+snippet test "table test" b
+func Test_${1:Name}(t *testing.T) {
+	testCases := []struct {
+		name         string
+		errorMatcher func(err error) bool
+	}{
+		{
+			name:         "case 0",
+			errorMatcher: nil,
+		},
+	}
+
+	for i, tc := range testCases {
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Log(tc.name)
+
+			$0
+
+			switch {
+			case err == nil && tc.errorMatcher == nil:
+				// correct; carry on
+			case err != nil && tc.errorMatcher == nil:
+				t.Fatalf("error == %#v, want nil", err)
+			case err == nil && tc.errorMatcher != nil:
+				t.Fatalf("error == nil, want non-nil")
+			case !tc.errorMatcher(err):
+				t.Fatalf("error == %#v, want matching", err)
+			}
+
+			if tc.errorMatcher != nil {
+				return
+			}
+		})
+	}
 }
 endsnippet
 
