@@ -1,10 +1,31 @@
 #
+# if !reflect.DeepEqual(actual, expected)
+#
+snippet iftest "if !reflect.DeepEqual"
+if !reflect.DeepEqual(${1:expected}, ${2:actual}) {
+	t.Fatalf("$1 = %v, want %v", $1, $2)
+}
+$0
+endsnippet
+
+#
 # cmp.Diff
 #
-snippet iftest "cmp.Diff"
+snippet iftestdiff "cmp.Diff"
 if !cmp.Equal(${1:Name}, tc.expected$2) {
 	t.Fatalf("\n\n%s\n", cmp.Diff(tc.expected$2, $1))
 }
+$0
+endsnippet
+
+#
+# if err != nil
+#
+snippet iftesterr "if err != nil"
+if err != nil {
+	t.Fatalf("err = %v, want %v", microerror.Stack(err), nil)
+}
+$0
 endsnippet
 
 
