@@ -180,6 +180,7 @@ Plug 'bogado/file-line'
 Plug 'christoomey/vim-tmux-navigator'
 "Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'tag': '*' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'godlygeek/tabular'
 Plug 'itchyny/lightline.vim'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
