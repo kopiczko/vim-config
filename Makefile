@@ -13,6 +13,9 @@ install: install-symlinks install-python install-ruby
 	@echo "        :Mkspell - To generate spell files."
 	@echo "        :UpdateRemotePlugins - To update python remote plugins."
 	@echo "        :checkhealth - To check health."
+	@echo "        :PlugUpgrade - to upgrade vim-plug.."
+	@echo "        :PlugUpdate - to install/update dependencies."
+	@echo "        :PlugStatus - to see if the dependencies are installed correctly."
 
 install-symlinks:
 	@echo "$(T_BOLD)---> Setting up symlink$(T_NORMAL)"
