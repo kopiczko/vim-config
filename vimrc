@@ -37,6 +37,12 @@ set splitbelow               " Split horizontal windows below to the current win
 " statusline always visible
 set laststatus=2
 
+" scrolling
+"" Setting `set scroll=10` doesn't work for me.
+"" https://stackoverflow.com/questions/37322720/set-default-scroll-options-in-vim
+nnoremap <C-u> 10k
+nnoremap <C-d> 10j
+
 " search
 set ignorecase
 set smartcase
