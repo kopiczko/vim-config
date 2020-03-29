@@ -23,7 +23,7 @@ endsnippet
 #
 snippet iftesterr "if err != nil"
 if err != nil {
-	t.Fatalf("err = %v, want %v", microerror.Stack(err), nil)
+	t.Fatalf("err = %#q, want %#v", microerror.JSON(err), nil)
 }
 $0
 endsnippet
