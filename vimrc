@@ -48,7 +48,8 @@ set ignorecase
 set smartcase
 set hlsearch
 set incsearch
-nnoremap <silent> <CR> :nohlsearch<CR>           " Map enter to disable search highlight.
+"" Map enter to disable search highlight.
+nnoremap <silent> <CR> :nohlsearch<CR>
 
 " Spell.
 set spellcapcheck=       " Allow sentences starting with lower letter
