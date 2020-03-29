@@ -348,6 +348,6 @@ augroup END
 
 " commands {{{
 command! Mkspell call MyMkspell()
-
 command! Q :qa!
+command! Cp :let @+ = expand("%:p")
 " }}}
