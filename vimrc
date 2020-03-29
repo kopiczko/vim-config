@@ -185,10 +185,10 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug '/usr/local/opt/fzf'
 Plug 'bogado/file-line'
 Plug 'christoomey/vim-tmux-navigator'
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'tag': '*' }
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'godlygeek/tabular'
 Plug 'itchyny/lightline.vim'
+Plug 'justinmk/vim-sneak'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'SirVer/ultisnips'
@@ -338,6 +338,12 @@ let g:markdown_fenced_languages = [
             \ 'python',
             \ ]
 let g:markdown_minlines = 100
+" }}}
+
+" vim-sneak {{{
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+let g:sneak#use_ic_scs = 1
 " }}}
 
 " yaml {{{
