@@ -115,8 +115,8 @@ autocmd FileType help wincmd H " open help vertically
 
 set wildignore+=*/log/*,*/target/*,*.class     " MacOSX/Linux
 
-let mapleader = ","
-let maplocalleader = ","
+let mapleader = "m"
+let maplocalleader = "m"
 
 inoremap jk <esc>
 
