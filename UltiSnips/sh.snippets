@@ -34,15 +34,15 @@ snippet flags "handling flags example" b
 aflag=no
 bflag=no
 
-while [ \$# -gt 0 ]; do
+while [ \$# -gt 0 ] ; do
     case "\$1" in
-    -a) aflag=yes;;
-    -b) bflag=yes;;
-    -f) flist="\$flist \$2"; shift;;
-    --single) single="\$2"; shift;;
-    --) shift; break;;
-    -*) echo "unrecognised option \$1" 1>&2; exit 1;;
-    *)  break;;
+    -a) aflag=yes ;;
+    -b) bflag=yes ;;
+    -f) flist="\$flist \$2" ; shift ;;
+    --single) single="\$2" ; shift ;;
+    --) shift ; break ;;
+    -*) echo "unrecognised option \$1" 1>&2 ; exit 1 ;;
+    *)  break ;;
     esac
     shift
 done
@@ -63,7 +63,7 @@ endsnippet
 
 snippet iferr "if [[ $? -ne 0 ]]" b
 local ret=$?
-if [[ $ret -ne 0 ]]; then
+if [[ $ret -ne 0 ]] ; then
     echo "error: $0" >&2
     return $ret
 fi
