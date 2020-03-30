@@ -1,6 +1,5 @@
 " vim: fdm=marker
-"
-"
+
 if has('nvim')
     let $VIMHOME = $HOME . "/.config/nvim"
 else
@@ -42,6 +41,8 @@ set laststatus=2
 "" https://stackoverflow.com/questions/37322720/set-default-scroll-options-in-vim
 nnoremap <C-u> 10k
 nnoremap <C-d> 10j
+vnoremap <C-u> 10k
+vnoremap <C-d> 10j
 
 " search
 set ignorecase
