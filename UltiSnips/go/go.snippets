@@ -30,10 +30,6 @@ snippet printf "fmt.Printf()" b
 fmt.Printf("${1:%#v}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\))/}$2${1/([^%]|%%)*(%.)?.*/(?2:\))/}
 endsnippet
 
-snippet panicf "panic(fmt.Sprintf(...))"
-panic(fmt.Sprintf("$0"))
-endsnippet
-
 snippet log "o.logger.LogCtx(ctx, ..."
 ${1:receiver}.logger.LogCtx(ctx, "level", "${2:debug}", "message", "$0")
 endsnippet

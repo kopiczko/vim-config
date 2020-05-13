@@ -6,7 +6,7 @@ snippet var "${var}"
 ${${1:var}}$0
 endsnippet
 
-snippet bang "shebang" b
+snippet shebang "shebang" b
 #!/usr/bin/env bash
 endsnippet
 
@@ -23,7 +23,7 @@ esac
 endsnippet
 
 snippet dir "script directory" b
-dir=\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )
+readonly dir=\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )
 endsnippet
 
 snippet echoerr "echo ... >&2"
@@ -67,4 +67,10 @@ if [[ $ret -ne 0 ]] ; then
     echo "error: $0" >&2
     return $ret
 fi
+endsnippet
+
+snippet bold "bold() function" b
+bold() {
+    echo "\$(tput bold)\$1\$(tput sgr0)"
+}
 endsnippet
