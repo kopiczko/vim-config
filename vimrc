@@ -26,12 +26,14 @@ syntax on
 filetype plugin indent on
 
 set hidden
-set nobackup                 " Don't create annoying backup files
-set noerrorbells             " No beeps
-set nojoinspaces             " No double space after a dot
-set nosplitright             " Split vertical windows left bo the current windows
-set noswapfile               " Don't use swapfile
-set splitbelow               " Split horizontal windows below to the current windows
+set mouse=a                  " Mouse events for all. Allows nice scrolling in tmux.
+set nobackup                 " Don't create annoying backup files.
+set noerrorbells             " No beeps.
+set nojoinspaces             " No double space after a dot.
+set noshowmode               " Get rid of thing like --INSERT--.
+set nosplitright             " Split vertical windows left bo the current windows.
+set noswapfile               " Don't use swapfile.
+set splitbelow               " Split horizontal windows below to the current windows.
 
 " statusline always visible
 set laststatus=2
@@ -82,9 +84,9 @@ set shiftwidth=4
 set expandtab
 set shiftround
 
-" indentaion marks
+" indentation marks
 set list
-set listchars=tab:.\ ,eol:¬,trail:·
+set listchars=tab:.\ ,eol:¬,trail:•
 
 " handle long lines
 set number
@@ -135,7 +137,15 @@ nnoremap <S-l> :bn<CR>
 nnoremap j gj
 nnoremap k gk
 " close buffer without changing window splits
-nnoremap <C-c> :bp\|bd #<CR>
+"nnoremap <C-c> :bp\|bd #<CR>
+nnoremap <silent> <C-c> :call init#BufCloseAndBack()<CR>
+
+function! init#BufCloseAndBack()
+    execute "bd"
+    if bufexists("#")
+        execute "e " . bufname("#")
+    endif
+endfunction
 
 vnoremap " <esc><esc>`<i"<esc>`>la"<esc>
 
@@ -162,37 +172,30 @@ autocmd FileType bash,c,cpp,go,java,javascript,markdown,php,sh autocmd BufWriteP
 "
 " https://github.com/zchee/deoplete-jedi/wiki/Setting-up-Python-for-Neovim
 if has('nvim')
-  let g:python_host_prog = '/usr/local/bin/python2'
+  "let g:python_host_prog = '/usr/local/bin/python2'
   let g:python3_host_prog = '/usr/local/bin/python3'
 
   let g:ruby_host_prog = '/usr/local/opt/ruby/bin/ruby'
 endif
 " }}}
 
-" color theme {{{
-" colorscheme PaperColor
-colorscheme vylight
-" invisible character colors
-highlight NonText guifg=#4a4a59
-highlight SpecialKey guifg=#4a4a59
-
-set background=light
-highlight Visual ctermbg=Grey
-" }}}
-
 "execute pathogen#infect()
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug '/usr/local/opt/fzf'
+Plug 'SirVer/ultisnips'
 Plug 'bogado/file-line'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'cormacrelf/vim-colors-github'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'godlygeek/tabular'
+Plug 'hashivim/vim-terraform'
 Plug 'itchyny/lightline.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'majutsushi/tagbar'
+Plug 'mustache/vim-mustache-handlebars'
 Plug 'scrooloose/nerdtree'
-Plug 'SirVer/ultisnips'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown'
 if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -200,6 +203,19 @@ endif
 
 call plug#end()
 
+" color theme {{{
+" colorscheme PaperColor
+" colorscheme vylight
+" colorscheme base16-google-light
+colorscheme github
+set nocursorline
+" invisible character colors
+highlight NonText guifg=#4a4a59
+highlight SpecialKey guifg=#4a4a59
+
+set background=light
+highlight Visual ctermbg=Grey
+" }}}
 
 " tmux navigator {{{
 let g:tmux_navigator_no_mappings = 1
@@ -256,6 +272,70 @@ nnoremap <c-p> :FZF!<CR>
 " tagbar {{{
 nmap <F3> :TagbarToggle<CR>
 let g:tagbar_sort = 0
+let g:tagbar_compact = 1
+
+let g:tagbar_type_go = {
+            \ 'ctagstype' : 'go',
+            \ 'kinds'     : [
+            \ 'p:package',
+            \ 'c:constants',
+            \ 'v:variables',
+            \ 't:types',
+            \ 'n:interfaces',
+            \ 'w:fields',
+            \ 'e:embedded',
+            \ 'm:methods',
+            \ 'r:constructor',
+            \ 'f:functions'
+            \ ],
+            \ 'sro' : '.',
+            \ 'kind2scope' : {
+            \ 't' : 'ctype',
+            \ 'n' : 'ntype'
+            \ },
+            \ 'scope2kind' : {
+            \ 'ctype' : 't',
+            \ 'ntype' : 'n'
+            \ },
+            \ 'ctagsbin'  : 'gotags',
+            \ 'ctagsargs' : '-sort -silent'
+            \ }
+let g:tagbar_type_markdown = {
+            \ 'ctagstype' : 'markdown',
+            \ 'kinds' : [
+            \ 'h:headers'
+            \ ],
+            \ 'sort' : 0,
+            \ }
+let g:tagbar_type_terraform = {
+            \ 'ctagstype' : 'terraform',
+            \ 'kinds' : [
+            \ 'r:resources',
+            \ 'm:modules',
+            \ 'o:outputs',
+            \ 'v:variables',
+            \ 'f:tfvars'
+            \ ],
+            \ 'sort' : 0
+            \ }
+let g:tagbar_type_yaml = {
+            \ 'ctagstype' : 'yaml',
+            \ 'kinds' : [
+            \ 'a:anchors',
+            \ 's:section',
+            \ 'e:entry'
+            \ ],
+            \ 'sro' : '.',
+            \ 'scope2kind': {
+            \ 'section': 's',
+            \ 'entry': 'e'
+            \ },
+            \ 'kind2scope': {
+            \ 's': 'section',
+            \ 'e': 'entry'
+            \ },
+            \ 'sort' : 0
+            \ }
 " }}}
 
 " youcompleteme {{{
@@ -297,50 +377,21 @@ autocmd FileType go command! T GoTest
 "autocmd BufWritePost *.go :SyntasticCheck
 augroup END
 
-let g:tagbar_type_go = {
-            \ 'ctagstype' : 'go',
-            \ 'kinds'     : [
-            \ 'p:package',
-            \ 'c:constants',
-            \ 'v:variables',
-            \ 't:types',
-            \ 'n:interfaces',
-            \ 'w:fields',
-            \ 'e:embedded',
-            \ 'm:methods',
-            \ 'r:constructor',
-            \ 'f:functions'
-            \ ],
-            \ 'sro' : '.',
-            \ 'kind2scope' : {
-            \ 't' : 'ctype',
-            \ 'n' : 'ntype'
-            \ },
-            \ 'scope2kind' : {
-            \ 'ctype' : 't',
-            \ 'ntype' : 'n'
-            \ },
-            \ 'ctagsbin'  : 'gotags',
-            \ 'ctagsargs' : '-sort -silent'
-            \ }
-let g:tagbar_type_markdown = {
-            \ 'ctagstype' : 'markdown',
-            \ 'kinds' : [
-            \ 'h:headers'
-            \ ],
-            \ 'sort' : 0,
-            \ }
 " }}}
 
 " vim-markdown {{{
+let g:vim_markdown_folding_disabled = 1
 let g:markdown_fenced_languages = [
             \ "go",
             \ 'bash=sh',
+            \ "diff",
             \ 'html',
             \ 'javascript',
+            \ 'json',
             \ 'python',
+            \ 'yaml',
             \ ]
-let g:markdown_minlines = 100
+let g:markdown_minlines = 200
 " }}}
 
 " vim-sneak {{{
@@ -349,8 +400,22 @@ map F <Plug>Sneak_F
 let g:sneak#use_ic_scs = 1
 " }}}
 
+" vim-terraform {{{
+
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1
+
+" }}}
+
+" {{{ plugin: indentLine
+" Example characters: ¦ ┆ │ ⎸ ▏
+"let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_char = '⎸'
+" }}}
+
 " yaml {{{
 augroup my-yaml
+autocmd BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 augroup END
 " }}}
