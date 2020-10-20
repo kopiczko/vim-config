@@ -11,21 +11,6 @@ package ${1:`!v expand('%:p:h:t')`}
 
 endsnippet
 
-snippet iferr "if err" b
-if err != nil {
-	log.${1:Fatal}(err)
-}
-
-endsnippet
-
-# gs: if error: mask
-snippet ifmask "if err mask" b
-if err != nil {
-	return $1microerror.Mask(err)
-}
-
-endsnippet
-
 snippet printf "fmt.Printf()" b
 fmt.Printf("${1:%#v}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\))/}$2${1/([^%]|%%)*(%.)?.*/(?2:\))/}
 endsnippet
@@ -40,7 +25,7 @@ endsnippet
 
 
 snippet logerr "o.logger.LogCtx(ctx, ..."
-${1:receiver}.logger.LogCtx(ctx, "level", "error", "message", "$0", "stack", microerror.Stack(err))
+${1:receiver}.logger.LogCtx(ctx, "level", "error", "message", "$0", "stack", microerror.JSON(err))
 endsnippet
 
 snippet logcancel "canceling resource reconciliation..."
@@ -63,21 +48,6 @@ endsnippet
 snippet invalidconfigvalidate "if config.N == nil" b
 if err := config.${1:Name}.Validate(); err != nil {
 	return nil, microerror.Maskf(invalidConfigError, "config.$1.%s", err)
-}
-$0
-endsnippet
-
-
-#
-# tc.errorMatcher
-#
-snippet iferrormatcher "if tc.errorMatcher ..." b
-if err != nil {
-	if tc.ErrorMatcher == nil {
-		t.Fatalf("unexpected error %#v", err)
-	} else if !tc.ErrorMatcher(err) {
-		t.Fatalf("unexpected error %#v", err)
-	}
 }
 $0
 endsnippet

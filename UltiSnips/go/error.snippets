@@ -1,3 +1,17 @@
+snippet iferr "if err" b
+if err != nil {
+	return err
+}
+
+endsnippet
+
+# gs: if error: mask
+snippet ifmask "if err mask" b
+if err != nil {
+	return $1microerror.Mask(err)
+}
+
+endsnippet
 # var executionFailedError = ...
 snippet executionFailedError "var executionFailedError" b
 // executionFailedError should never be matched against and therefore there is
@@ -54,3 +68,16 @@ func Is${1/./\u$0/}(err error) bool {
 }
 endsnippet
 
+#
+# tc.errorMatcher
+#
+snippet iferrormatcher "if tc.errorMatcher ..." b
+if err != nil {
+	if tc.ErrorMatcher == nil {
+		t.Fatalf("unexpected error %#v", err)
+	} else if !tc.ErrorMatcher(err) {
+		t.Fatalf("unexpected error %#v", err)
+	}
+}
+$0
+endsnippet
