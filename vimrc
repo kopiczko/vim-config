@@ -521,7 +521,6 @@ augroup END
 " }}}
 
 " commands {{{
-command! Mkspell call init#MyMkspell()
 command! Q :qa!
 command! Cp :let @+ = expand("%:p")
 " }}}
