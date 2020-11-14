@@ -1,10 +1,10 @@
 " vim: fdm=marker
 
-if has('nvim')
-    let $VIMHOME = $HOME . "/.config/nvim"
-else
-    let $VIMHOME = $HOME . "/.vim"
-endif
+" I hit q way too often.
+noremap <Leader>q q
+noremap q <Nop>
+
+let $VIMHOME = fnamemodify($MYVIMRC, ':p:h')
 
 " Vim Settings {{{
 
@@ -103,8 +103,6 @@ if has("unix")
   endif
 endif
 
-autocmd FileType help wincmd H " open help vertically
-
 set wildignore+=*/log/*,*/target/*,*.class     " MacOSX/Linux
 
 let mapleader = "m"
@@ -124,8 +122,8 @@ inoremap <C-a> <Esc>I
 inoremap <C-e> <Esc>A
 "nnoremap <M-=> <C-a>
 "nnoremap <M--> <C-x>
-nnoremap <S-h> :tabp<CR>
-nnoremap <S-l> :tabn<CR>
+nnoremap <S-h> :bp<CR>
+nnoremap <S-l> :bn<CR>
 nnoremap j gj
 nnoremap k gk
 " close buffer without changing window splits
@@ -164,8 +162,7 @@ function init#MyMkspell(path)
 endfunction
 
 function s:InitSpell()
-    let dir = fnamemodify($MYVIMRC, ':p:h') . '/spell'
-    let files = globpath(dir, '*.utf-8.add')
+    let files = globpath($VIMHOME . '/spell', '*.utf-8.add')
     let files = substitute(files, '\n', ',', 'g')
     let &spellfile = files
 endfunction
@@ -195,7 +192,6 @@ if has('nvim')
 endif
 " }}}
 
-"execute pathogen#infect()
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'SirVer/ultisnips'
@@ -219,7 +215,7 @@ call plug#end()
 
 " denite {{{
 " First part is to prevent from opening files in NERDTree buffer.
-nnoremap <silent><expr> <C-p> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Denite buffer file/rec<CR>"
+nnoremap <silent><expr> <C-p> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Denite -start-filter buffer file/rec<CR>"
 
 nnoremap <silent> <leader><leader> :Denite menu<CR>
 vnoremap <silent> <leader><leader> :Denite menu:tabular<CR>
@@ -232,6 +228,7 @@ let s:menus.vim = {
 let s:menus.vim.command_candidates = [
             \ ['Edit init.vim', 'e $MYVIMRC'],
             \ ['Source init.vim', 'source $MYVIMRC'],
+            \ ['Open current location list (See :h :lop)', 'lop'],
             \ ]
 let s:menus.ultisnips = {
             \ 'description': 'Some tabular commands',
@@ -251,28 +248,16 @@ let s:menus.tabular.command_candidates = [
             \ ['Align by " (useful for VimL comments)', 'Tab /"'],
             \ ]
 
-"let s:menus.zsh.file_candidates = [
-"        \ ['zshrc', '~/.config/zsh/.zshrc'],
-"        \ ['zshenv', '~/.zshenv'],
-"        \ ]
-"
-"let s:menus.my_commands = {
-"        \ 'description': 'Example commands'
-"        \ }
-"let s:menus.my_commands.command_candidates = [
-"        \ ['Split the window', 'vnew'],
-"        \ ['Open zsh menu', 'Denite menu:zsh'],
-"        \ ['Format code', 'FormatCode', 'go,python'],
-"        \ ]
-
 call denite#custom#var('menu', 'menus', s:menus)
 
 " Use ag for listing files.
 call denite#custom#var('file/rec', 'command',
-    \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+    \ ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '--ignore', '.git', '-g', ''])
 " Sort files using Sublime sorter.
 call denite#custom#source(
     \ 'file/rec', 'sorters', ['sorter/sublime'])
+call denite#custom#source(
+    \ 'file', 'sorters', ['sorter/sublime'])
 
 autocmd FileType denite call s:denite_my_settings()
 function! s:denite_my_settings() abort
@@ -280,6 +265,8 @@ function! s:denite_my_settings() abort
       \ denite#do_map('do_action', 'delete')
   nnoremap <silent><buffer><expr> <CR>
       \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> <Esc>
+      \ denite#do_map('quit')
   nnoremap <silent><buffer><expr> q
       \ denite#do_map('quit')
   nnoremap <silent><buffer><expr> i
@@ -289,6 +276,8 @@ endfunction
 autocmd FileType denite-filter call s:denite_filter_my_settings()
 function! s:denite_filter_my_settings() abort
   imap <silent><buffer> <C-o>
+      \ <Plug>(denite_filter_quit)
+  imap <silent><buffer> <Esc>
       \ <Plug>(denite_filter_quit)
   inoremap <silent><buffer><expr> <CR>
       \ denite#do_map('do_action')
@@ -465,16 +454,17 @@ let g:go_metalinter_enabled = 1
 augroup vimgo
 autocmd!
 
-autocmd FileType go nnoremap <buffer> <leader>r <Plug>(go-run)
-autocmd FileType go nnoremap <buffer> <leader>d <Plug>(go-doc-browser)
-autocmd FileType go nnoremap <buffer> <C-]> <Plug>(coc-definition)
-autocmd FileType go inoremap <silent><expr> <C-x><C-o> coc#refresh()
-"autocmd FileType go nmap <buffer> <C-]> :execute 'YcmCompleter GoTo'<CR>
+    autocmd FileType go nnoremap <buffer> <leader>r <Plug>(go-run)
+    autocmd FileType go nnoremap <buffer> <leader>d <Plug>(go-doc-browser)
+    " I don't know why this doesn't work.
+    "autocmd FileType go nnoremap <buffer> <C-]> <Plug>(coc-definition)
+    autocmd FileType go nnoremap <buffer> <C-]> :call CocAction('jumpDefinition')<CR>
+    autocmd FileType go inoremap <silent><expr> <C-x><C-o> coc#refresh()
+    "autocmd FileType go nmap <buffer> <C-]> :execute 'YcmCompleter GoTo'<CR>
 
-autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
-autocmd FileType go command! T GoTest
-
-"autocmd BufWritePost *.go :SyntasticCheck
+    autocmd FileType go setlocal noexpandtab tabstop=8 shiftwidth=8 softtabstop=8
+    autocmd FileType go command! T GoTest
+    autocmd FileType go command! R e term://go run .
 augroup END
 
 " }}}
@@ -520,7 +510,49 @@ autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 augroup END
 " }}}
 
-" commands {{{
+" Built-in commands replacements {{{
+
+" :ls -> :Denite buffer
+cnoreabbrev ls <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Denite buffer' : 'ls')<CR>
+" :git -> :Git
+cnoreabbrev git <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Git' : 'git')<CR>
+
+" }}}
+
+" Commands and Key Bindings {{{
+
+" Esc to go to normal mode in terminal.
+
+function init#GitStatus() abort
+    Gstatus
+    stopinsert
+    nnoremap <buffer> q :bd!<CR>
+    on
+    rightbelow 120vnew
+    call termopen('git diff')
+    stopinsert
+    nnoremap <buffer> q :bd!<CR>
+    execute "normal! \<C-w>\<C-w>"
+endfunction
+
+tnoremap <Esc> <C-\><C-n>
+nnoremap <leader>df :new<CR>:on<CR>:call termopen('git diff')<CR>
+nnoremap <leader>st :call init#GitStatus()<CR>
+nnoremap <leader>c :Gcommit<CR>:on<CR>
+
+augroup init_mey_map
+    autocmd!
+    " q to close help.
+    autocmd FileType help nnoremap <buffer><silent> q :bd<CR>
+    " Enter to go to the item and then close the quickfix/location list.
+    " q to close the quickfix/location.
+    autocmd FileType qf nnoremap <buffer><silent> <CR> <CR>:ccl<CR>:lcl<CR>
+    autocmd FileType qf nnoremap <buffer><silent> q :ccl<CR>:lcl<CR>
+    " Start with insert mode when entering neovim terminal.
+    autocmd TermOpen * startinsert
+augroup END
+
 command! Q :qa!
 command! Cp :let @+ = expand("%:p")
+command! Gp :Git pull
 " }}}
