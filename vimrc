@@ -222,6 +222,12 @@ vnoremap <silent> <leader><leader> :Denite menu:tabular<CR>
 
 " Add custom menus
 let s:menus = {}
+let s:menus.git = {
+            \ 'description': 'Git commands',
+            \ }
+let s:menus.git.command_candidates = [
+            \ ['Branches', 'call mygit#Branches()'],
+            \ ]
 let s:menus.vim = {
             \ 'description': 'VIM utils',
             \ }
