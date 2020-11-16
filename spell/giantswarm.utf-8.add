@@ -1,2 +1,6 @@
 executionfailederror
 invalidconfigerror
+isexecutionfailederror
+isinvalidconfigerror
+isnotfound
+notfounderror

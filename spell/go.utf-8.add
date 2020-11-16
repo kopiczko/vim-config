@@ -1,2 +1,4 @@
-omitempty
 memfs
+omitempty
+readdir
+readfile
