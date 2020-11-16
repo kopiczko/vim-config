@@ -1,7 +1,7 @@
 let s:win_width = 40
 let s:win_min_height = 5
 
-function s:WinSetHeight(win, buf) abort
+function! s:WinSetHeight(win, buf) abort
     let cnt = nvim_buf_line_count(a:buf)
     if cnt < s:win_min_height
         let cnt = s:win_min_height
@@ -9,14 +9,14 @@ function s:WinSetHeight(win, buf) abort
     call nvim_win_set_height(a:win, cnt)
 endfunction
 
-function s:GitBranchDelete() abort
+function! s:GitBranchDelete() abort
     let branch = nvim_get_current_line()[2:]
     if nvim_get_current_line()[0:0] ==# '*'
-        echomsg 'Error: Branch '.branch.' is the current branch'
+        echoerr 'Error: Branch '.branch.' is the current branch'
         return
     endif
     if branch ==# 'master'
-        echomsg 'Error: Deleting '.branch.' branch is forbidden'
+        echoerr 'Error: Deleting '.branch.' branch is forbidden'
         return
     endif
     set noreadonly
@@ -26,13 +26,13 @@ function s:GitBranchDelete() abort
     execute 'Git branch -D '.branch
 endfunction
 
-function s:GitCheckout() abort
+function! s:GitCheckout() abort
     let branch = nvim_get_current_line()[2:]
     bd!
     execute 'Git checkout '.branch
 endfunction
 
-function mygit#Branches() abort
+function! mygit#Branches() abort
     let buf = nvim_create_buf(v:false, v:true)
     let opts = {'relative': 'editor', 'width': s:win_width, 'height': &lines, 'col': &columns/2-s:win_width/2,
                 \ 'row': 5, 'anchor': 'NW', 'style': 'minimal'}
@@ -51,4 +51,19 @@ function mygit#Branches() abort
     setlocal readonly
 
     call s:WinSetHeight(win, buf)
+endfunction
+
+function! mygit#Command(line1, line2, range, bang, mods, arg) abort
+    if a:arg =~# '^d$\|^dc$\|^diff$\|^d \|^dc \|^diff '
+        execute 'edit term://git '.a:arg
+        inoremap <buffer><silent> q :bd!<CR>
+    elseif a:arg =~# '^b$\|^branch$'
+        call mygit#Branches()
+    elseif a:arg =~# '^s$\|^st$\|^status$'
+        execute 'Gstatus'
+        only
+        nnoremap <buffer><silent> q :bd!<CR>
+    else
+        call fugitive#Command(a:line1, a:line2, a:range, a:bang, a:mods, a:arg)
+    endif
 endfunction

@@ -525,7 +525,7 @@ augroup END
 " :ls -> :Denite buffer
 cnoreabbrev ls <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Denite buffer' : 'ls')<CR>
 " :git -> :Git
-cnoreabbrev git <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Git' : 'git')<CR>
+cnoreabbrev git <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'MyGit' : 'git')<CR>
 
 " }}}
 
@@ -564,5 +564,4 @@ augroup END
 
 command! Q :qa!
 command! Cp :let @+ = expand("%:p")
-command! Gp :Git pull
 " }}}
