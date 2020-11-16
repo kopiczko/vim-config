@@ -306,14 +306,18 @@ endfunction
 " colorscheme PaperColor
 " colorscheme vylight
 " colorscheme base16-google-light
+
+" For 'github' pop-up windows are not very visible so set a custom highlight.
 colorscheme github
+
 set nocursorline
 " invisible character colors
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 
 set background=light
-highlight Visual ctermbg=Grey
+highlight Pmenu   guibg=#dddddd guifg=#444444
+highlight Visual  guibg=#c8e1ff guifg=#000000
 " }}}
 
 " tmux navigator {{{
