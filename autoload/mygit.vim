@@ -54,8 +54,9 @@ function! mygit#Branches() abort
 endfunction
 
 function! mygit#Command(line1, line2, range, bang, mods, arg) abort
-    if a:arg =~# '^d$\|^dc$\|^diff$\|^d \|^dc \|^diff \|^lg$\|^log$'
+    if a:arg =~# '^d$\|^dc$\|^diff$\|^d \|^dc \|^diff \|^lg$\|^log$\|^push$'
         execute 'edit term://git '.a:arg
+        setlocal nonumber
         nnoremap <buffer><silent> q :bd!<CR>
     elseif a:arg =~# '^b$\|^branch$'
         call mygit#Branches()
