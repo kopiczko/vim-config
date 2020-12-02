@@ -251,6 +251,7 @@ let s:menus.tabular.command_candidates = [
             \ ['Align by =', 'Tab /='],
             \ ['Align by : (: stays on the left)', 'Tab /:\zs'],
             \ ['Align by ,', 'Tab /,'],
+            \ ['Align by , (, stays on the left)', 'Tab /,\zs'],
             \ ['Align by " (useful for VimL comments)', 'Tab /"'],
             \ ]
 
@@ -258,7 +259,7 @@ call denite#custom#var('menu', 'menus', s:menus)
 
 " Use ag for listing files.
 call denite#custom#var('file/rec', 'command',
-    \ ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '--ignore', '.git', '-g', ''])
+    \ ['ag', '--follow', '--nocolor', '--nogroup', '-U', '--hidden', '--ignore', '.git', '-g', ''])
 " Sort files using Sublime sorter.
 call denite#custom#source(
     \ 'file/rec', 'sorters', ['sorter/sublime'])
@@ -526,6 +527,8 @@ augroup END
 cnoreabbrev ls <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Denite buffer' : 'ls')<CR>
 " :git -> :Git
 cnoreabbrev git <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'MyGit' : 'git')<CR>
+" :gp -> !git pull
+cnoreabbrev gp <C-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'MyGit pull' : 'gp')<CR>
 
 " }}}
 
@@ -564,4 +567,6 @@ augroup END
 
 command! Q :qa!
 command! Cp :let @+ = expand("%:p")
+command! Pr :!gh pr view -w || ( gh pr create -a kopiczko -f && gh pr view -w )
+
 " }}}
