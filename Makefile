@@ -4,7 +4,7 @@ T_NORMAL=$(shell tput sgr0)
 NVIM_CONFIG_DIR=$(HOME)/.config/nvim
 CURRENT_DIR=$(abspath $(shell pwd))
 
-install: install-symlinks install-python install-ruby install-coc
+install: install-symlinks install-python install-ruby install-coc install-invim
 	@echo "$(T_BOLD)---> Downloading vim-plug$(T_NORMAL)"
 	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 	    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -43,4 +43,7 @@ install-coc:
 	@echo "--> Install latest gopls"
 	go get golang.org/x/tools/gopls
 	@echo "--> Install coc extensions"
-	nvim -c 'CocInstall -sync coc-go|q'
+
+install-invim:
+	nvim -c 'UpdateRemotePlugins'
+	nvim -c 'CocInstall -sync coc-go'
