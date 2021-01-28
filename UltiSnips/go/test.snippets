@@ -2,7 +2,7 @@
 # if !reflect.DeepEqual(actual, expected)
 #
 snippet iftest "if !reflect.DeepEqual"
-if !reflect.DeepEqual(${1:expected}, ${2:actual}) {
+if !reflect.DeepEqual(${1:actual}, ${2:expected}) {
 	t.Fatalf("$1 = %v, want %v", $1, $2)
 }
 $0
@@ -23,7 +23,7 @@ endsnippet
 #
 snippet iftesterr "if err != nil"
 if err != nil {
-	t.Fatalf("err = %#q, want %#v", microerror.JSON(err), nil)
+	t.Fatalf("err = %#q, want %#v", microerror.Pretty(err, true), nil)
 }
 $0
 endsnippet
