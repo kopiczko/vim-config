@@ -23,7 +23,7 @@ function! s:GitBranchDelete() abort
     execute 'normal! dd'
     set readonly
     call s:WinSetHeight(nvim_get_current_win(), nvim_get_current_buf())
-    execute 'Git branch -D '.branch
+    execute 'Git branch -D '.substitute(branch, '#', '\\#', 'g')
 endfunction
 
 function! s:GitCheckout() abort
@@ -56,8 +56,9 @@ endfunction
 function! mygit#Command(line1, line2, range, bang, mods, arg) abort
     if a:arg =~# '^d$\|^dc$\|^diff$\|^d \|^dc \|^diff \|^lg$\|^log$\|^push$'
         execute 'edit term://git '.a:arg
-        setlocal nonumber
+        setlocal nonumber nospell
         nnoremap <buffer><silent> q :bd!<CR>
+        tnoremap <buffer><silent> q <C-\><C-n>:bd!<CR>
     elseif a:arg =~# '^b$\|^branch$'
         call mygit#Branches()
     elseif a:arg =~# '^s$\|^st$\|^status$'
