@@ -259,7 +259,7 @@ call denite#custom#var('menu', 'menus', s:menus)
 
 " Use ag for listing files.
 call denite#custom#var('file/rec', 'command',
-    \ ['ag', '--follow', '--nocolor', '--nogroup', '-U', '--hidden', '--ignore', '.git', '-g', ''])
+    \ ['ag', '--follow', '--nocolor', '--nogroup', '-U', '--hidden', '--ignore', '.git', '--ignore', 'node_modules', '-g', ''])
 " Sort files using Sublime sorter.
 call denite#custom#source(
     \ 'file/rec', 'sorters', ['sorter/sublime'])
@@ -567,6 +567,6 @@ augroup END
 
 command! Q :qa!
 command! Cp :let @+ = expand("%:p")
-command! Pr :!gh pr view -w || ( gh pr create -a kopiczko -f && gh pr view -w )
+command! Pr :!gh pr view -w || ( gh pr create -dfa kopiczko && gh pr view -w )
 
 " }}}
