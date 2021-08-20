@@ -21,6 +21,13 @@ if !has('nvim')
   set fileencoding=utf-8
 endif
 
+"" Set title
+"set title
+"augroup init_title
+"    autocmd!
+"    autocmd BufEnter * let &titlestring ="%{system($VIMHOME.'/script/title.sh')}"
+"augroup END
+
 syntax on
 filetype plugin indent on
 
@@ -206,6 +213,7 @@ Plug 'neoclide/coc.nvim', {'tag': '*'}
 Plug 'justinmk/vim-sneak'
 Plug 'majutsushi/tagbar'
 Plug 'mustache/vim-mustache-handlebars'
+Plug 'ruanyl/vim-gh-line'
 Plug 'scrooloose/nerdtree'
 Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-fugitive'
@@ -351,7 +359,8 @@ autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " Quit when NERDTree is the only open buffer.
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let NERDTreeQuitOnOpen=1
+let NERDTreeQuitOnOpen=0
+let NERDTreeMinimalUI=1
 " }}}
 
 " lightline {{{
@@ -452,6 +461,28 @@ let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 " }}}
 
+"{{{ vim-gh-line
+
+"
+" https://github.com/ruanyl/vim-gh-line#how-to-use
+"
+" Default key mapping for a blob view:   <leader>gh
+" Default key mapping for a blame view:  <leader>gb
+" Default key mapping for repo view:     <leader>go
+"
+" To disable default key mappings:
+"
+"let g:gh_line_map_default = 0
+"let g:gh_line_blame_map_default = 1
+"
+" Use your own mappings:
+"
+"let g:gh_line_map = '<leader>gh'
+"let g:gh_line_blame_map = '<leader>gb'
+"
+
+"}}}
+
 " vim-go {{{
 " TODO use gometalinter maybe also consider Neomake
 let g:syntastic_go_checkers = ['go', 'govet', 'errcheck'] " , 'golint'
@@ -478,6 +509,14 @@ autocmd!
     autocmd FileType go command! R e term://go run .
 augroup END
 
+command! GoImportAppsV1       :GoImportAs appsv1 "k8s.io/api/apps/v1"
+command! GoImportCoreV1       :GoImportAs corev1 "k8s.io/api/core/v1"
+command! GoImportCtrl         :GoImportAs ctrl "sigs.k8s.io/controller-runtime"
+command! GoImportCtrlClient   :GoImport "sigs.k8s.io/controller-runtime/pkg/client"
+command! GoImportMicroerror   :GoImport "github.com/giantswarm/microerror"
+command! GoImportMicrologger  :GoImport "github.com/giantswarm/micrologger"
+command! GoImportPflag        :GoImportAs flag "github.com/spf13/pflag"
+command! GoImportYaml         :GoImportAs flag "sigs.k8s.io/yaml"
 " }}}
 
 " vim-markdown {{{
@@ -553,7 +592,7 @@ nnoremap <leader>df :new<CR>:on<CR>:call termopen('git diff')<CR>
 nnoremap <leader>st :call init#GitStatus()<CR>
 nnoremap <leader>c :Gcommit<CR>:on<CR>
 
-augroup init_mey_map
+augroup init_my_map
     autocmd!
     " q to close help.
     autocmd FileType help nnoremap <buffer><silent> q :bd<CR>
@@ -563,10 +602,18 @@ augroup init_mey_map
     autocmd FileType qf nnoremap <buffer><silent> q :ccl<CR>:lcl<CR>
     " Start with insert mode when entering neovim terminal.
     autocmd TermOpen * startinsert
+    " Restore cursor.
+    "   :h restore-cursor
+    "   :h '"
+    autocmd BufReadPost *
+      \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+      \ |   exe "normal! g`\""
+      \ | endif
 augroup END
+
 
 command! Q :qa!
 command! Cp :let @+ = expand("%:p")
-command! Pr :!gh pr view -w || ( gh pr create -dfa kopiczko && gh pr view -w )
+command! Pr :!gh pr view -w || ( git push && gh pr create -dfa kopiczko && gh pr view -w )
 
 " }}}
