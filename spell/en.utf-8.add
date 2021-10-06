@@ -39,7 +39,6 @@ ci
 cidr
 circleci
 cli
-cli
 cloudconfig
 cloudconfigs
 cloudformation
@@ -181,6 +180,7 @@ logentries
 loopback
 m
 map
+mechanizm
 memcached
 metadata
 microendpoint
@@ -234,6 +234,10 @@ prometheus
 prs
 psp
 pullsecret
+q1
+q2
+q3
+q4
 r0
 r3
 r4
@@ -295,6 +299,7 @@ systemd
 tallygo
 tarball
 targetport
+tbd
 teardown
 templated
 templating

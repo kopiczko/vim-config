@@ -1,3 +1,4 @@
+errcheck
 memfs
 omitempty
 readdir
