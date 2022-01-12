@@ -10,6 +10,34 @@ snippet shebang "shebang" b
 #!/usr/bin/env bash
 endsnippet
 
+snippet modeline "add bash modeline" b
+# ex: ts=4 sw=4 et ft=sh
+endsnippet
+
+snippet dir "script directory" b
+readonly dir=\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )
+endsnippet
+
+snippet bold "bold() function" b
+bold() {
+    echo "\$(tput bold)\$1\$(tput sgr0)"
+}
+endsnippet
+
+snippet func "function name()" b
+function $1() {
+    bold "===> ${FUNCNAME[0]} $@"
+
+    $0
+}
+endsnippet
+
+snippet setx "set -x" b
+set -x
+$0
+{ set +x; } 2>/dev/null
+endsnippet
+
 snippet case "script directory" b
 case ${1:var} in
 [1-6]*)
@@ -20,10 +48,6 @@ case ${1:var} in
 *)
   ;;
 esac
-endsnippet
-
-snippet dir "script directory" b
-readonly dir=\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )
 endsnippet
 
 snippet echoerr "echo ... >&2"
@@ -48,10 +72,6 @@ while [ \$# -gt 0 ] ; do
 done
 endsnippet
 
-snippet modeline "add bash modeline" b
-# ex: ts=4 sw=4 et ft=sh
-endsnippet
-
 snippet ostype "detect os type" b
 set os
 case \$OSTYPE in
@@ -69,8 +89,11 @@ if [[ $ret -ne 0 ]] ; then
 fi
 endsnippet
 
-snippet bold "bold() function" b
-bold() {
-    echo "\$(tput bold)\$1\$(tput sgr0)"
-}
+snippet forarr "for element in ${elements[@]}"
+$1s=("value1" "value2")
+
+for $1 in ${$1s[@]}
+do
+    $0
+done
 endsnippet

@@ -42,8 +42,7 @@ install-coc:
 	go version
 	@echo "--> Install latest gopls"
 	go get golang.org/x/tools/gopls
-	@echo "--> Install coc extensions"
 
 install-invim:
 	nvim -c 'UpdateRemotePlugins'
-	nvim -c 'CocInstall -sync coc-go'
+	nvim -c 'CocInstall -sync coc-go coc-snippets'

@@ -209,7 +209,7 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'godlygeek/tabular'
 Plug 'hashivim/vim-terraform'
 Plug 'itchyny/lightline.vim'
-Plug 'neoclide/coc.nvim', {'tag': '*'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'justinmk/vim-sneak'
 Plug 'majutsushi/tagbar'
 Plug 'mustache/vim-mustache-handlebars'
