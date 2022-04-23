@@ -4,7 +4,7 @@ T_NORMAL=$(shell tput sgr0)
 NVIM_CONFIG_DIR=$(HOME)/.config/nvim
 CURRENT_DIR=$(abspath $(shell pwd))
 
-install: install-symlinks install-python install-ruby install-coc install-invim
+install: install-symlinks install-python install-ruby install-coc
 	@echo "$(T_BOLD)---> Downloading vim-plug$(T_NORMAL)"
 	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 	    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -12,6 +12,7 @@ install: install-symlinks install-python install-ruby install-coc install-invim
 	@echo "$(T_BOLD)**** RUN THIS WHEN YOU FIRST TIME OPEN NVIM ****$(T_NORMAL)"
 	@echo "        :Mkspell - To generate spell files."
 	@echo "        :UpdateRemotePlugins - To update python remote plugins."
+	@echo "        :CocInstall -sync coc-go"
 	@echo "        :checkhealth - To check health."
 	@echo "        :PlugUpgrade - to upgrade vim-plug.."
 	@echo "        :PlugUpdate - to install/update dependencies."
@@ -41,9 +42,5 @@ install-coc:
 	node --version
 	go version
 	@echo "--> Install latest gopls"
-	go get golang.org/x/tools/gopls
+	go install golang.org/x/tools/gopls@master
 	@echo "--> Install coc extensions"
-
-install-invim:
-	nvim -c 'UpdateRemotePlugins'
-	nvim -c 'CocInstall -sync coc-go'

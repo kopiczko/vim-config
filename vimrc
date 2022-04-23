@@ -192,10 +192,8 @@ autocmd FileType bash,c,cpp,go,java,javascript,markdown,php,sh autocmd BufWriteP
 "
 " https://github.com/zchee/deoplete-jedi/wiki/Setting-up-Python-for-Neovim
 if has('nvim')
-  "let g:python_host_prog = '/usr/local/bin/python2'
-  let g:python3_host_prog = '/usr/local/bin/python3'
-
-  let g:ruby_host_prog = '/usr/local/opt/ruby/bin/ruby'
+  "let g:python3_host_prog = system('brew --prefix') . '/bin/python3'
+  "let g:ruby_host_prog = '/usr/local/opt/ruby/bin/ruby'
 endif
 " }}}
 
