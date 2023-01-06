@@ -6,6 +6,14 @@ snippet var "${var}"
 ${${1:var}}$0
 endsnippet
 
+snippet top "shebang + set" b
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+endsnippet
+
 snippet shebang "shebang" b
 #!/usr/bin/env bash
 endsnippet
@@ -16,6 +24,11 @@ endsnippet
 
 snippet dir "script directory" b
 readonly dir=\$( cd "\$( dirname "\${BASH_SOURCE[0]}" )" && pwd )
+endsnippet
+
+snippet toplevel "topleve dir" b
+git rev-parse --show-toplevel >/dev/null || exit 1
+readonly toplevel=\$( git rev-parse --show-toplevel )
 endsnippet
 
 snippet bold "bold() function" b
@@ -36,6 +49,11 @@ snippet setx "set -x" b
 set -x
 $0
 { set +x; } 2>/dev/null
+endsnippet
+
+snippet mktemp "mktemp" b
+tmp=$(mktemp "\${TMPDIR:-"/tmp"}/${1:file}.XXXXXXXX.${2:txt}")
+$0
 endsnippet
 
 snippet case "script directory" b
@@ -62,8 +80,8 @@ while [ \$# -gt 0 ] ; do
     case "\$1" in
     -a) aflag=yes ;;
     -b) bflag=yes ;;
-    -f) flist="\$flist \$2" ; shift ;;
-    --single) single="\$2" ; shift ;;
+    -f) flist="\$flist \${2:-""}" ; shift ;;
+    --single) single="\${2:-""}" ; shift ;;
     --) shift ; break ;;
     -*) echo "unrecognised option \$1" 1>&2 ; exit 1 ;;
     *)  break ;;
@@ -86,6 +104,13 @@ local ret=$?
 if [[ $ret -ne 0 ]] ; then
     echo "error: $0" >&2
     return $ret
+fi
+endsnippet
+
+snippet ifflagempty "if [[ -z ${value} ]]" b
+if [[ -z \${$1} ]]; then
+    echo "error: --${1/_/-/g} not set" >&2
+    exit 1
 fi
 endsnippet
 

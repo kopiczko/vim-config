@@ -8,7 +8,7 @@ CURRENT_DIR=$(abspath $(shell pwd))
 help: ## Display this help.
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^[a-zA-Z_0-9-]+:.*?##/ { printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-install: install-symlinks install-python install-ruby install-coc install-invim ## Install all.
+install: install-symlinks install-node install-python install-ruby install-coc post-install-msg ## Install all.
 	@echo "$(T_BOLD)---> Downloading vim-plug$(T_NORMAL)"
 	curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 	    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -35,10 +35,14 @@ install-python: ## Install pynvim.
 	#pip2 install --upgrade --user pynvim
 	pip3 install --upgrade --user pynvim
 
-install-ruby: ## Install neovim.
+install-ruby: ## Install neovim for ruby.
 	@echo "$(T_BOLD)---> Installing ruby libraries$(T_NORMAL)"
 	gem install --user-install neovim
 	gem update --user-install neovim
+
+install-node: ## Install neovim for node.
+	@echo "$(T_BOLD)---> Installing node libraries$(T_NORMAL)"
+	pnpm install -g neovim
 
 install-coc: ## Install CoC.
 	@echo "$(T_BOLD)---> Installing coc.nvim$(T_NORMAL)"
@@ -48,6 +52,10 @@ install-coc: ## Install CoC.
 	@echo "--> Install coc extensions"
 	go get golang.org/x/tools/gopls
 
-install-invim: ## Install stuff that should be run inside nvim.
-	nvim -c 'UpdateRemotePlugins'
-	nvim -c 'CocInstall -sync coc-go coc-snippets'
+
+post-install-msg: ## Install stuff that should be run inside nvim.
+	@echo "Run following inside nvim:"
+	@echo "    :PlugUpgrade"
+	@echo "    :PlugUpdate"
+	@echo "    :UpdateRemotePlugins"
+	@echo "    :CocInstall -sync coc-go coc-snippets"

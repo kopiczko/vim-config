@@ -1,0 +1,5 @@
+{
+  "diagnostic-languageserver.filetypes": {
+    "sh": "shellcheck"
+  }
+}

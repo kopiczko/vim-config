@@ -133,6 +133,7 @@ nnoremap <S-h> :bp<CR>
 nnoremap <S-l> :bn<CR>
 nnoremap j gj
 nnoremap k gk
+nnoremap Y ^y$
 " close buffer without changing window splits
 "nnoremap <C-c> :bp\|bd #<CR>
 nnoremap <silent> <C-c> :call init#BufCloseAndBack()<CR>
@@ -313,6 +314,10 @@ function! s:denite_filter_my_settings() abort
   nnoremap <silent><buffer><expr> <Up>
       \ denite#increment_parent_cursor(-1)
 endfunction
+" }}}
+
+" coc-nvim {{{
+inoremap <expr><CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
 " }}}
 
 " color theme {{{
@@ -514,7 +519,7 @@ command! GoImportCtrlClient   :GoImport "sigs.k8s.io/controller-runtime/pkg/clie
 command! GoImportMicroerror   :GoImport "github.com/giantswarm/microerror"
 command! GoImportMicrologger  :GoImport "github.com/giantswarm/micrologger"
 command! GoImportPflag        :GoImportAs flag "github.com/spf13/pflag"
-command! GoImportYaml         :GoImportAs flag "sigs.k8s.io/yaml"
+command! GoImportYaml         :GoImport "sigs.k8s.io/yaml"
 " }}}
 
 " vim-markdown {{{
